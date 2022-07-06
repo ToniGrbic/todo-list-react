@@ -1,7 +1,7 @@
 import React from 'react'
-
-const Form = ({handleSubmit, todoText, setTodoText, editFlag, setSelect}) => {
-    
+import { useGlobalContext } from './context'
+const Form = () => {
+    const { handleSubmit, todoText, setTodoText, editFlag, setSelect} = useGlobalContext()
     return (
         <>
         <form id="Form" onSubmit={handleSubmit}>

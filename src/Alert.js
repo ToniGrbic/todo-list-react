@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
-
-const Alert = ({type, msg, list, removeAlert}) => {
+import { useGlobalContext } from './context';
+const Alert = () => {
+  const { alert, todos, setAlert} = useGlobalContext()
+  
   useEffect(() => {
+    
     const timeout = setTimeout(() => {
-      removeAlert();
-    }, 3000);
+      setAlert( {show:false, type:'', msg:''});
+    }, 1700);
     return () => clearTimeout(timeout);
-  }, [list]);
-  return <div className={`alertDiv alert-${type}`}>{msg}</div>;
+  }, [todos]);
+  return <div className={`alertDiv alert-${alert.type}`}>{alert.msg}</div>;
 }
 
 export default Alert

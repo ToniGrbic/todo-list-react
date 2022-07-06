@@ -11,7 +11,7 @@ body{
   
 }
 .container{
-  width: 40%;
+  width: 30%;
   margin: 0 auto;
   min-width:600px;
 }
@@ -22,6 +22,7 @@ h1{
 }
 
 .alertDiv{
+  width:90%;
   margin-bottom: 1rem;
   height: 1.5rem;
   display: grid;
@@ -31,6 +32,7 @@ h1{
   border-radius: 0.25rem;
   letter-spacing: 0.25rem;
   text-transform: capitalize;
+
 }
 
 label{
@@ -145,7 +147,7 @@ div i{
   margin-top: 10px; 
   display: flex;
   justify-content: space-between;
-  width:85%;
+  width:84.5%;
 }
 
 .show-container {
@@ -153,7 +155,7 @@ div i{
 }
 
 .clearBtn {
-  width: 85%;
+  width: 88%;
   text-align: center;
   cursor:pointer;
   background-color: rgb(243, 162, 11);

@@ -1,13 +1,13 @@
 import React from 'react'
-
 import Todo  from './Todo'
-const List = ({todos, editTodo, checkTodo, deleteTodo}) => {
+import { useGlobalContext } from './context'
+const List = () => {
+  const { filteredTodos } = useGlobalContext()
   return (
     <>
-      {todos.map((todo)=>{
+     {filteredTodos.map((todo)=>{
       return (
-        <Todo key={todo.id} todo={todo} editTodo={editTodo} 
-        checkTodo={checkTodo} deleteTodo={deleteTodo}/>
+        <Todo key={todo.id} todo={todo}/>
       )})
     }
     </>
