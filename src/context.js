@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
+import reducer from './reducer'
 import uuid from 'react-uuid'
 const AppContext = React.createContext()
 
@@ -12,89 +13,97 @@ const getLocalStorage = () => {
   }
 
 const AppProvider = ({ children }) => {
-  const [todos, setTodos] = useState(getLocalStorage())
-  const [todoText, setTodoText] = useState('')
-  const [editID, setEditID] = useState(null)
-  const [editFlag, setEditFlag] = useState(false)
-  const [alert, setAlert] = useState({ show:false, type:'', msg:''})
-  const [select, setSelect] = useState('All')
-  const [filteredTodos, setFilteredTodos] = useState([])
-
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    if(!todoText){
-      showAlert( true, 'danger', 'input empty, cant sumbit!')
-    }
-    else if(todoText && editFlag){
-      const editedTodos = todos.map((todo)=>{
-        if(todo.id === editID){
-          return {...todo, text: todoText}
-        }
-        return todo
-      })
-      setTodos(editedTodos)
-      setEditFlag(false)
-      setTodoText('')
-      showAlert(true, 'success', 'todo edited!')
-    }
-    else{
-      const newTodo = { id: uuid(), text:todoText, completed:false}
-      setTodos([...todos, newTodo])
-      setTodoText('')
-      showAlert(true, 'success', 'todo added!')
-    }
+ 
+  const defaultState = {
+    todos: getLocalStorage(),
+    todoText: '',
+    editID: null,
+    editFlag: false,
+    alert: { show:false, type:'', msg:''},
+    select: 'All',
+    filteredTodos:[]
   }
+
+  const [state, dispatch] =  useReducer(reducer, defaultState)
 
   const showAlert = (show = false, type = '', msg = '')=>{
-    setAlert({show, type, msg})
+    dispatch({type: 'SHOW_ALERT', payload:{show, type, msg}})
   }
   const clearTodos = ()=>{
-    setTodos([])
+    dispatch({type:'CLEAR_TODOS'})
     showAlert(true, 'danger', 'todos deleted!')
   }
 
   const deleteTodo = (id)=>{
-   const newTodos = todos.filter((todo)=> todo.id !== id)
-   setTodos(newTodos)
+   dispatch({type:'DELETE_TODO', payload:id})
    showAlert(true, 'danger', 'todo deleted!')
   }
 
   const checkTodo = (id)=>{
-    const newTodos = todos.map((todo)=>{
-      if(todo.id === id){
-        return {...todo, completed:!todo.completed}
-      }
-      return todo
-    })
-    setTodos(newTodos)
+    dispatch({type:'CHECK_TODO', payload:id})
   }
 
   const editTodo = (id)=>{
-    setEditFlag(true)
-    setEditID(id)
-    const currentTodoText = todos.find((todo)=>todo.id === id)
-    setTodoText(currentTodoText.text)
-  }  
+    dispatch({type:'SET_EDIT_FLAG', payload:true})
+    dispatch({type:'SET_EDIT_ID', payload:id})
+    const currentTodoText = state.todos.find((todo)=>todo.id === id)
+    dispatch({type:'SET_TODO_TEXT', payload:currentTodoText.text})
+  } 
+
+  const handleTodoText = (value)=>{
+    dispatch({type:'SET_TODO_TEXT', payload:value})
+  }
+
+  const handleSelect = (value)=>{
+    dispatch({type:'SET_SELECT', payload:value})
+  }
 
   const filterTodos = ()=>{
-    switch(select){
+    let filteredTodos
+    switch(state.select){
       case 'Completed':
-        setFilteredTodos(todos.filter((todo)=> todo.completed ===true))
+        filteredTodos = state.todos.filter((todo)=> todo.completed ===true)
       break
       case 'Uncompleted':
-        setFilteredTodos(todos.filter((todo)=> todo.completed ===false))
+        filteredTodos = state.todos.filter((todo)=> todo.completed ===false)
       break
       default:
-        setFilteredTodos(todos)
+        filteredTodos = state.todos
       break
     }
+    dispatch({type:'SET_FILTERED_TODOS', payload:filteredTodos})
   }
-  
+
+
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    if(!state.todoText){
+      showAlert( true, 'danger', 'input empty, cant sumbit!')
+    }
+    else if(state.todoText && state.editFlag){
+      const editedTodos = state.todos.map((todo)=>{
+        if(todo.id === state.editID){
+          return {...todo, text: state.todoText}
+        }
+        return todo
+      })
+      dispatch({type:'SET_TODOS', payload:editedTodos})
+      dispatch({type:'SET_EDIT_FLAG', payload:false})
+      dispatch({type:'SET_TODO_TEXT', payload:''})
+      showAlert(true, 'success', 'todo edited!')
+    }
+    else{
+      const newTodo = { id: uuid(), text:state.todoText, completed:false}
+      dispatch({type:'ADD_TODO', payload:newTodo})
+      dispatch({type:'SET_TODO_TEXT', payload:''})
+      showAlert(true, 'success', 'todo added!')
+    }
+  }
     return (
       <AppContext.Provider
-        value={{todos, todoText, editFlag, editID, alert, select, filteredTodos,
-                setTodos, setTodoText, setEditFlag, setEditID, setAlert, setSelect, setFilteredTodos,
-                handleSubmit, clearTodos, checkTodo, editTodo, deleteTodo, filterTodos}}>
+        value={{...state, handleSubmit, handleTodoText,handleSelect,
+                filterTodos, clearTodos, deleteTodo, checkTodo, 
+                showAlert, editTodo }}>
         {children}
       </AppContext.Provider>
     );
