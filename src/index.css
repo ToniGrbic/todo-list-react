@@ -34,7 +34,6 @@ h1{
   text-transform: capitalize;
 
 }
-
 label{
   position: absolute;
 }
@@ -109,6 +108,30 @@ height:30px;
   margin-left:10px;
   height:30px;
 }
+.todoButtonsContainer{
+  height:auto;
+  width:90px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap: wrap;
+}
+
+.todoButtonsContainer > button{
+  height:25px;
+}
+
+.bsChev{
+  border-radius:50%;
+  border:none;
+  background-color:#EEEEEE;
+  margin:5px;
+  transition: 400ms;
+}
+
+.bsChev:hover{
+  background-color:#E1E1E1;
+}
 
 i{
   margin-right:10px;
@@ -123,16 +146,8 @@ div i{
   height:18px;
 }
 
-.fa-check-square{
-  background: green;
-}
-
-.fa-minus-square{
-  background: brown;
-}
-
 .todoCompleted{
-  background: #d4edda !important; ;
+  background: #d4edda !important; 
   text-decoration: line-through;
   transition: 500ms;
 }  
@@ -148,6 +163,12 @@ div i{
   display: flex;
   justify-content: space-between;
   width:84.5%;
+  white-space: normal;
+}
+
+.todoText{
+  word-wrap: break-word;
+  text-align: center;
 }
 
 .show-container {

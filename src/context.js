@@ -46,16 +46,26 @@ const AppProvider = ({ children }) => {
   const editTodo = (id)=>{
     dispatch({type:'SET_EDIT_FLAG', payload:true})
     dispatch({type:'SET_EDIT_ID', payload:id})
-    const currentTodoText = state.todos.find((todo)=>todo.id === id)
-    dispatch({type:'SET_TODO_TEXT', payload:currentTodoText.text})
+    const currentTodo = state.todos.find((todo)=>todo.id === id)
+    dispatch({type:'SET_TODO_TEXT', payload:currentTodo.text})
   } 
 
   const handleTodoText = (value)=>{
-    dispatch({type:'SET_TODO_TEXT', payload:value})
+    if(value.length < 50)
+      dispatch({type:'SET_TODO_TEXT', payload:value})
+    else {
+      showAlert(true, 'danger', 'max number of charachters reached')
+    }
+      
   }
 
   const handleSelect = (value)=>{
-    dispatch({type:'SET_SELECT', payload:value})
+      
+      dispatch({type:'SET_SELECT', payload:value})
+  }
+
+  const moveTodoUpDown = (id, type)=>{
+    dispatch({type:'MOVE_TODO', payload:{id, type}})
   }
 
   const filterTodos = ()=>{
@@ -103,7 +113,7 @@ const AppProvider = ({ children }) => {
       <AppContext.Provider
         value={{...state, handleSubmit, handleTodoText,handleSelect,
                 filterTodos, clearTodos, deleteTodo, checkTodo, 
-                showAlert, editTodo }}>
+                showAlert, editTodo, moveTodoUpDown }}>
         {children}
       </AppContext.Provider>
     );
