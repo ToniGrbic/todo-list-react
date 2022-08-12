@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
-import { useGlobalContext } from './context'
+import { useGlobalContext } from '../context'
 const Form = () => {
-    const { todoText, editFlag, handleSubmit, handleTodoText, handleSelect } = useGlobalContext()
+    const { todoText, editFlag, handleSubmit, handleTodoText, handleSelect } =
+     useGlobalContext()
+     
     const inputRef = React.useRef()
     useEffect(()=>{
         inputRef.current.focus()

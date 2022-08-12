@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import {BsChevronUp, BsChevronDown} from 'react-icons/bs'
-import { useGlobalContext } from './context';
+import { useGlobalContext } from '../context';
 import { FaCheckSquare } from 'react-icons/fa'
 const Todo = ({todo})=>{
 
@@ -10,7 +10,8 @@ const Todo = ({todo})=>{
     
     return (
         <div className={`todoDiv ${completed ? 'todoCompleted' : null}`}>
-          <button style={{height:"25px"}}onClick={()=>editTodo(id)}>
+          <button style={{height:"25px"}}
+            onClick={()=>editTodo(id)}>
             <FaEdit/>
           </button>
           <div style={{maxWidth:"360px"}} >

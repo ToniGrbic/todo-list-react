@@ -45,7 +45,7 @@ const reducer = (state, action)=>{
         break
         case 'MOVE_TODO':
             const moveUpDown = (id, delta) =>{
-                const newTodos = [...state.todos];
+                newTodos = [...state.todos];
               
                 const currentTodo = newTodos.find(todo=>todo.id === id)
                 const currentIndex = newTodos.indexOf(currentTodo)
@@ -61,6 +61,7 @@ const reducer = (state, action)=>{
                 newTodos.splice(newIndex, 0, currentTodo);
                 state={...state, todos:newTodos}
             }
+            
             if(action.payload.type === 'Up'){
                 moveUpDown(action.payload.id, -1)
             }

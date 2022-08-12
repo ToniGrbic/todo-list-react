@@ -1,6 +1,7 @@
 import React, { useContext, useReducer } from 'react';
 import reducer from './reducer'
 import uuid from 'react-uuid'
+
 const AppContext = React.createContext()
 
 const getLocalStorage = () => {
@@ -55,12 +56,10 @@ const AppProvider = ({ children }) => {
       dispatch({type:'SET_TODO_TEXT', payload:value})
     else {
       showAlert(true, 'danger', 'max number of charachters reached')
-    }
-      
+    } 
   }
 
   const handleSelect = (value)=>{
-      
       dispatch({type:'SET_SELECT', payload:value})
   }
 
@@ -120,7 +119,7 @@ const AppProvider = ({ children }) => {
   };
 
   export const useGlobalContext = () => {
-  return useContext(AppContext);
+    return useContext(AppContext);
   };
   
   export { AppContext, AppProvider };

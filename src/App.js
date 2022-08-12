@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
-import List from './List'
-import Alert from './Alert'
-import Form from './Form'
+import List from './components/List'
+import Alert from './components/Alert'
+import Form from './components/Form'
 import { useGlobalContext } from './context'
 import autoAnimate  from '@formkit/auto-animate'
 
@@ -24,8 +24,9 @@ function App() {
   return (
   <div className="container">
     <h1>Todo List</h1>
-    {alert.show && 
-    <Alert/>}
+    {
+    alert.show && <Alert/>
+    }
     <Form />
 
      {  todos.length > 0 && 
@@ -35,7 +36,7 @@ function App() {
         <button 
           className='clearBtn' 
           onClick={clearTodos}>
-        clear items
+          clear items
         </button>
       </div>
       )}  
