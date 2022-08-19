@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import List from './components/List'
-import Alert from './components/Alert'
-import Form from './components/Form'
+import { List, Alert, Form } from './components'
 import { useGlobalContext } from './context'
 import autoAnimate  from '@formkit/auto-animate'
 

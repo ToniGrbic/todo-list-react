@@ -65,7 +65,7 @@ const reducer = (state, action)=>{
             if(action.payload.type === 'Up'){
                 moveUpDown(action.payload.id, -1)
             }
-            if(action.payload.type === 'Down'){
+            else if(action.payload.type === 'Down'){
                 moveUpDown(action.payload.id, 1)
             }
         break

@@ -42,6 +42,7 @@ const AppProvider = ({ children }) => {
 
   const checkTodo = (id)=>{
     dispatch({type:'CHECK_TODO', payload:id})
+    showAlert(true, 'success', 'todo completed!')
   }
 
   const editTodo = (id)=>{

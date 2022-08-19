@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { useGlobalContext } from '../context';
+
 const Alert = () => {
   const { alert, todos, showAlert} = useGlobalContext()
-  
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       showAlert(false, '', '');
-    }, 1700);
+    }, 1400);
     return () => clearTimeout(timeout);
   }, [todos]);
   

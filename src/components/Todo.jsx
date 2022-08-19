@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa'
-import {BsChevronUp, BsChevronDown} from 'react-icons/bs'
+import { BsChevronUp, BsChevronDown } from 'react-icons/bs'
 import { useGlobalContext } from '../context';
 import { FaCheckSquare } from 'react-icons/fa'
 
