@@ -71,8 +71,13 @@ const AppProvider = ({ children }) => {
       dispatch({type:'SET_SELECT', payload:value})
   }
 
-  const moveTodoUpDown = (id, type)=>{
-    dispatch({type:'MOVE_TODO', payload:{id, type}})
+  const moveTodo = (id, type)=>{
+    if(type === 'Up'){
+      dispatch({type:'MOVE_TODO', payload:{id, delta:-1}})
+    }else if(type === 'Down'){
+      dispatch({type:'MOVE_TODO', payload:{id, delta:1}})
+    }
+    
   }
 
   const filterTodos = ()=>{
@@ -120,7 +125,7 @@ const AppProvider = ({ children }) => {
       <AppContext.Provider
         value={{...state, handleSubmit, handleTodoText,handleSelect,
                 filterTodos, clearTodos, deleteTodo, checkTodo, 
-                showAlert, editTodo, moveTodoUpDown }}>
+                showAlert, editTodo, moveTodo }}>
         {children}
       </AppContext.Provider>
     );

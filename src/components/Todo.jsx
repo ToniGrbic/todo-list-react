@@ -7,7 +7,7 @@ import { FaCheckSquare } from 'react-icons/fa'
 const Todo = ({todo, index})=>{
 
     const { completed, text, id} = todo
-    const { editTodo, checkTodo, deleteTodo, moveTodoUpDown} = useGlobalContext()
+    const { editTodo, checkTodo, deleteTodo, moveTodo } = useGlobalContext()
     
     return (
         <div className={`todoDiv ${completed ? 'todoCompleted' : null}`}>
@@ -34,11 +34,11 @@ const Todo = ({todo, index})=>{
             <FaTrash/>
           </button>
           <button className="bsChev" 
-            onClick={()=>moveTodoUpDown(id, 'Up')}>
+            onClick={()=>moveTodo(id, 'Up')}>
             <BsChevronUp />
           </button>
           <button className="bsChev" 
-            onClick={()=>moveTodoUpDown(id, 'Down')}>
+            onClick={()=>moveTodo(id, 'Down')}>
             <BsChevronDown />
           </button>
         </div>

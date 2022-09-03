@@ -44,30 +44,23 @@ const reducer = (state, action)=>{
             state={...state, todoText:action.payload}
         break
         case 'MOVE_TODO':
-            const moveUpDown = (id, delta) =>{
-                newTodos = [...state.todos];
+            const id = action.payload.id
+            const delta = action.payload.delta
+            newTodos = [...state.todos];
               
-                const currentTodo = newTodos.find(todo=>todo.id === id)
-                const currentIndex = newTodos.indexOf(currentTodo)
-                newTodos.splice(currentIndex, 1);
+            const currentTodo = newTodos.find(todo=>todo.id === id)
+            const currentIndex = newTodos.indexOf(currentTodo)
+            newTodos.splice(currentIndex, 1);
 
-                let newIndex = currentIndex + delta
-                if(newIndex > newTodos.length){
-                    newIndex = 0;
-                }else if(newIndex < 0){
-                    newIndex = newTodos.length
-                }
+            let newIndex = currentIndex + delta
+            if(newIndex > newTodos.length){
+                newIndex = 0;
+            }else if(newIndex < 0){
+                newIndex = newTodos.length
+            }
 
-                newTodos.splice(newIndex, 0, currentTodo);
-                state={...state, todos:newTodos}
-            }
-            
-            if(action.payload.type === 'Up'){
-                moveUpDown(action.payload.id, -1)
-            }
-            else if(action.payload.type === 'Down'){
-                moveUpDown(action.payload.id, 1)
-            }
+            newTodos.splice(newIndex, 0, currentTodo);
+            state={...state, todos:newTodos}
         break
         default:
             throw new Error('no matching action type')
