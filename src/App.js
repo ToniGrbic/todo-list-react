@@ -34,7 +34,7 @@ function App() {
         <button 
           className='clearBtn' 
           onClick={clearTodos}>
-          clear items
+          delete all
         </button>
       </div>
       )}  

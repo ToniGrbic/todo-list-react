@@ -42,7 +42,14 @@ const AppProvider = ({ children }) => {
 
   const checkTodo = (id)=>{
     dispatch({type:'CHECK_TODO', payload:id})
-    showAlert(true, 'success', 'todo completed!')
+    const currentTodo = state.todos.find((todo)=>todo.id === id)
+    if(currentTodo.completed === true){
+      showAlert(true, 'danger', 'todo uncompleted!')
+    }else{
+      
+      showAlert(true, 'success', 'todo completed!')
+    }
+    
   }
 
   const editTodo = (id)=>{
