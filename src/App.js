@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React,{useEffect, useRef} from 'react'
 import { List, Alert, Form } from './components'
 import { useGlobalContext } from './context'
 import autoAnimate  from '@formkit/auto-animate'
@@ -6,6 +6,7 @@ import autoAnimate  from '@formkit/auto-animate'
 function App() {
   const { todos, select, alert, clearTodos, filterTodos  } = useGlobalContext()
   const todoParentDiv = useRef(null)
+
 
   useEffect(()=>{
     localStorage.setItem('todos', JSON.stringify(todos));
@@ -21,10 +22,13 @@ function App() {
 
   return (
   <div className="container">
+    
     <h1>Todo List</h1>
-    {
-    alert.show && <Alert/>
-    }
+    <div style={{height:'3rem'}}>
+      {
+        alert.show && <Alert/>
+      }
+    </div>
     <Form />
     <div className="listDiv" 
          ref={todoParentDiv}>
