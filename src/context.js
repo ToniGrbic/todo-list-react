@@ -77,7 +77,6 @@ const AppProvider = ({ children }) => {
     }else if(type === 'Down'){
       dispatch({type:'MOVE_TODO', payload:{id, delta:1}})
     }
-    
   }
 
   const filterTodos = ()=>{

@@ -26,18 +26,19 @@ function App() {
     alert.show && <Alert/>
     }
     <Form />
-
-     {  todos.length > 0 && 
-      (<div className="listDiv" 
-        ref = {todoParentDiv}>
+    <div className="listDiv" 
+         ref={todoParentDiv}>
+     {todos.length > 0 && 
+      (<>
         <List/>
         <button 
           className='clearBtn' 
           onClick={clearTodos}>
           delete all
         </button>
-      </div>
+      </>
       )}  
+    </div>
   </div>
 )
 }

@@ -44,8 +44,7 @@ const reducer = (state, action)=>{
             state={...state, todoText:action.payload}
         break
         case 'MOVE_TODO':
-            const id = action.payload.id
-            const delta = action.payload.delta
+            const { id, delta } = action.payload
             newTodos = [...state.todos];
               
             const currentTodo = newTodos.find(todo=>todo.id === id)
