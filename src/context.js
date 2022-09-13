@@ -22,7 +22,7 @@ const AppProvider = ({ children }) => {
     editFlag: false,
     alert: { show:false, type:'', msg:''},
     select: 'All',
-    filteredTodos:[]
+    filteredTodos:[],
   }
 
   const [state, dispatch] =  useReducer(reducer, defaultState)
@@ -49,7 +49,6 @@ const AppProvider = ({ children }) => {
       
       showAlert(true, 'success', 'todo completed!')
     }
-    
   }
 
   const editTodo = (id)=>{

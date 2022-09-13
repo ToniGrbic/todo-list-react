@@ -1,13 +1,13 @@
-import React,{useEffect, useRef} from 'react'
-import { List, Alert, Form } from './components'
+import React,{ useEffect, useRef, useState } from 'react'
+import { List, Alert, Form, Modal } from './components'
 import { useGlobalContext } from './context'
 import autoAnimate  from '@formkit/auto-animate'
 
 function App() {
   const { todos, select, alert, clearTodos, filterTodos  } = useGlobalContext()
   const todoParentDiv = useRef(null)
-
-
+  const [showModal, setShowModal] = useState(false)  
+  
   useEffect(()=>{
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos])
@@ -20,6 +20,7 @@ function App() {
     todoParentDiv.current && autoAnimate(todoParentDiv.current)
   },[todoParentDiv])
 
+
   return (
   <div className="container">
     
@@ -29,6 +30,12 @@ function App() {
         alert.show && <Alert/>
       }
     </div>
+   
+    { showModal && 
+      <Modal description="Are you sure to delete all?"
+             setShowModal={setShowModal}
+             clearTodos={clearTodos}/>} 
+
     <Form />
     <div className="listDiv" 
          ref={todoParentDiv}>
@@ -37,7 +44,7 @@ function App() {
         <List/>
         <button 
           className='clearBtn' 
-          onClick={clearTodos}>
+          onClick={()=>setShowModal(true)}>
           delete all
         </button>
       </>
