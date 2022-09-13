@@ -16,29 +16,28 @@ const Todo = ({todo, index})=>{
               {index + 1}
             </div>
             <button style={{height:"25px"}}
-              onClick={()=>editTodo(id)}>
+                    onClick={()=>editTodo(id)}>
               <FaEdit/>
             </button>
           </div>
           
-          <div style={{maxWidth:"360px"}} >
-            
-            <h4 className="todoText">{text}</h4>
+          <div className="todoText">
+            <h4>{text}</h4>
           </div>
 
         <div className="todoButtonsContainer">
           <button onClick={()=>checkTodo(id)}>
-              <FaCheckSquare style={{height:"20px"}}/>
+            <FaCheckSquare />
           </button>
           <button onClick={()=>deleteTodo(id)}>
             <FaTrash/>
           </button>
           <button className="bsChev" 
-            onClick={()=>moveTodo(id, 'Up')}>
+                  onClick={()=>moveTodo(id, 'Up')}>
             <BsChevronUp />
           </button>
           <button className="bsChev" 
-            onClick={()=>moveTodo(id, 'Down')}>
+                  onClick={()=>moveTodo(id, 'Down')}>
             <BsChevronDown />
           </button>
         </div>

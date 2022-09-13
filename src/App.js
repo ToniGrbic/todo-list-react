@@ -23,7 +23,6 @@ function App() {
 
   return (
   <div className="container">
-    
     <h1>Todo List</h1>
     <div style={{height:'3rem'}}>
       {
@@ -31,7 +30,7 @@ function App() {
       }
     </div>
    
-    { showModal && 
+    {showModal && 
       <Modal description="Are you sure to delete all?"
              setShowModal={setShowModal}
              clearTodos={clearTodos}/>} 

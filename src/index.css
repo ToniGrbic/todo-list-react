@@ -1,5 +1,12 @@
 :root{
-  --main-color:rgb(253, 152, 0);
+  --orange-btn: rgb(243, 162, 11);
+  --orange-btn-hover: rgb(255, 117, 4);
+  --success-bg-color: #d4edda;
+  --success-color: #155724;
+  --danger-bg-color: #721c24;
+  --danger-color: #f8d7da;
+  --grey-color: #E1E1E1;
+  --light-grey-color:#EEEEEE;
 }
 
 *{
@@ -7,22 +14,20 @@
 }
 
 body{
-  //background: linear-gradient(90deg, rgba(255,167,0,1) 0%, rgb(243, 224, 76) 100%);
-  //background: linear-gradient(90deg, rgba(82,66,185,1) 0% , rgba(48,38,102,1) 100%);
-  //background: linear-gradient(90deg, rgba(52,93,227,1) 0%, rgba(16,33,133,1) 100%);
   background: linear-gradient(0deg, rgba(93,128,187,1) 0%, rgba(25,42,123,1) 88%, rgba(11,25,102,1) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
-  
   height:100vh;
   width:100%;
 }
+
 .container{
   padding-bottom:20px;
   width: 30%;
   margin: 0% auto;
   min-width:500px;
 }
+
 @media screen and (max-width: 580px){
   .container{
     width:80%;
@@ -49,17 +54,13 @@ h1{
   text-transform: capitalize;
 }
 
-label{
-  position: absolute;
-}
-
 .alert-danger {
-  color: #721c24;
-  background: #f8d7da;
+  color: var(--danger-bg-color);
+  background: var(--danger-color);
 }
 .alert-success {
-  color: #155724;
-  background: #d4edda;
+  color: var(--success-color);
+  background: var(--success-bg-color);
 }
 
 input[type ='text']{
@@ -75,29 +76,25 @@ select{
   font-weight:bold;
   transition: 500ms;
 }
-select:hover{
+
+select,button :hover{
   cursor:pointer;
 }
 
 .submitDiv{
- display:flex;
- 
- //margin-right:5%;
+  display:flex;
 }
 
 #submit{
-  background-color: rgb(241, 173, 64);
+  background-color: var(--orange-btn);
   border: none;
   width: 100px;
-  position: relative;
-  right: 0.6%;
   height:41px;
   transition: 500ms;
-
 }
 
 #submit:hover{
-  background-color: rgb(255, 117, 4);
+  background-color: var(--orange-btn-hover);
 }
 
 #submit h3{
@@ -105,26 +102,9 @@ select:hover{
 }
 
 #submit:hover h3{
-  
   transform: translate(0px, -5px);
 }
-button:hover{
-  cursor: pointer;
-}
 
-.check-btn{
-border:none;
-background-color: white;
-margin-left:10px;
-height:30px;
-}
-
-.del-btn{
-  border:none;
-  background-color: red;
-  margin-left:10px;
-  height:30px;
-}
 .todoButtonsContainer{
   height:auto;
   width:90px;
@@ -141,39 +121,25 @@ height:30px;
 .bsChev{
   border-radius:50%;
   border:none;
-  background-color:#EEEEEE;
+  background-color:var(--light-grey-color);
   margin:5px;
   transition: 400ms;
 }
 
 .bsChev:hover{
-  background-color:#E1E1E1;
-}
-
-i{
-  margin-right:10px;
-}
-
-div i{
-  cursor: pointer;
-  text-decoration: none !important;
-}
-
-.fa-edit{
-  height:18px;
+  background-color:var(--grey-color);
 }
 
 .todoCompleted{
-  background: #d4edda !important; 
+  background: var(--success-bg-color) !important; 
   text-decoration: line-through;
   transition: 500ms;
 }  
 
-
 .todoDiv{
   height: 60px;
   background-color: white;
-  width: 95%;
+  width: 96%;
   border-radius: 5px;
   padding: 10px;
   margin-top: 10px; 
@@ -185,10 +151,11 @@ div i{
 .todoText{
   word-wrap: break-word;
   text-align: center;
+  max-width:330px;
 }
 
 .indexNumber{
-  background-color:#E1E1E1;
+  background-color:var(--grey-color);
   text-align:center;
   border-radius:50%;
   font-weight:bold;
@@ -196,14 +163,14 @@ div i{
 }
 
 .show-container {
-  visibility:  visible !important; 
+  visibility: visible !important; 
 }
 
 .clearBtn {
   width: 100%;
   text-align: center;
   cursor:pointer;
-  background-color: rgb(243, 162, 11);
+  background-color: var(--orange-btn);
   border:none;
   margin-top: 10px;
   font-size: 1.1rem;
@@ -214,7 +181,7 @@ div i{
 }
 
 .clearBtn:hover{
- background-color: rgb(255, 117, 4);
+ background-color: var(--orange-btn-hover);
 }
 
 .modal {
@@ -244,8 +211,7 @@ div i{
   width:100px;
   height:40px;
   text-transform: Uppercase;
-  margin-left:5px;
-  margin-right:5px;
+  margin:5px;
   letter-spacing:3px;
   background-color:white;
   border-radius:5px;
