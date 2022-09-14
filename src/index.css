@@ -28,13 +28,7 @@ body{
   min-width:500px;
 }
 
-@media screen and (max-width: 580px){
-  .container{
-    width:80%;
-    min-width:300px;
-    margin: 5% auto;
-  }
-}
+
 
 h1{
   color:white;
@@ -137,7 +131,7 @@ select,button :hover{
 }  
 
 .todoDiv{
-  height: 60px;
+  //height: 60px;
   background-color: white;
   width: 96%;
   border-radius: 5px;
@@ -152,6 +146,7 @@ select,button :hover{
   word-wrap: break-word;
   text-align: center;
   max-width:330px;
+  line-height:18px;
 }
 
 .indexNumber{
@@ -201,7 +196,7 @@ select,button :hover{
 	width: 30%;
 	color: black;
   background-color:white;
-	padding: 30px;
+	padding: 20px;
 	text-align: center;
 	font-size: 1.1rem;
 	border: 5px solid #262626;
@@ -225,4 +220,15 @@ select,button :hover{
 .confirmBtn{
   border: 3px solid green;
   color:green;
+}
+
+@media screen and (max-width: 580px){
+  .container{
+    width:80%;
+    min-width:300px;
+    margin: 5% auto;
+  }
+  .todoText{
+    max-width:180px;
+  }
 }

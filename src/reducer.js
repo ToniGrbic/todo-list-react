@@ -5,8 +5,14 @@ const reducer = (state, action)=>{
         case 'SHOW_ALERT':
             state = {...state, alert: action.payload}
         break
-        case 'CLEAR_TODOS':
-            state = {...state, todos: []}
+        case 'DELETE_TODOS':
+            if(state.select === 'All')
+               newTodos = []
+            else if(state.select === 'Completed')
+                newTodos = state.todos.filter((todo)=> todo.completed !== true)
+            else if(state.select === 'Uncompleted')
+                newTodos = state.todos.filter((todo)=> todo.completed === true)
+            state = {...state, todos:newTodos}
         break
         case 'DELETE_TODO':
             newTodos = state.todos.filter((todo)=> todo.id !== action.payload)
@@ -26,7 +32,6 @@ const reducer = (state, action)=>{
         break
         case 'SET_EDIT_FLAG':
             state={...state, editFlag: action.payload}
-        
         break
         case 'ADD_TODO':
               state = {...state, todos:[...state.todos, action.payload]}

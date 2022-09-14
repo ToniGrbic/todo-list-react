@@ -30,8 +30,8 @@ const AppProvider = ({ children }) => {
   const showAlert = (show = false, type = '', msg = '')=>{
     dispatch({type: 'SHOW_ALERT', payload:{show, type, msg}})
   }
-  const clearTodos = ()=>{
-    dispatch({type:'CLEAR_TODOS'})
+  const deleteTodos = ()=>{
+    dispatch({type:'DELETE_TODOS'})
     showAlert(true, 'danger', 'todos deleted!')
   }
 
@@ -79,6 +79,7 @@ const AppProvider = ({ children }) => {
   }
 
   const filterTodos = ()=>{
+   
     let filteredTodos
     switch(state.select){
       case 'Completed':
@@ -92,8 +93,8 @@ const AppProvider = ({ children }) => {
       break
     }
     dispatch({type:'SET_FILTERED_TODOS', payload:filteredTodos})
+  
   }
-
 
   const handleSubmit = (e)=>{
     e.preventDefault()
@@ -122,7 +123,7 @@ const AppProvider = ({ children }) => {
     return (
       <AppContext.Provider
         value={{...state, handleSubmit, handleTodoText,handleSelect,
-                filterTodos, clearTodos, deleteTodo, checkTodo, 
+                filterTodos, deleteTodos, deleteTodo, checkTodo, 
                 showAlert, editTodo, moveTodo }}>
         {children}
       </AppContext.Provider>

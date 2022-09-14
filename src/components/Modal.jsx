@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Modal = ({description, setShowModal, clearTodos}) => {
+const Modal = ({description, setShowModal, deleteTodos}) => {
 
   const handleConfirmClick = ()=>{
     setShowModal(false)
-    clearTodos()
+    deleteTodos()
   }
   return (
     <div className='modal'>

@@ -4,7 +4,7 @@ import { useGlobalContext } from './context'
 import autoAnimate  from '@formkit/auto-animate'
 
 function App() {
-  const { todos, select, alert, clearTodos, filterTodos  } = useGlobalContext()
+  const { todos, select, alert, deleteTodos, filterTodos, filteredTodos  } = useGlobalContext()
   const todoParentDiv = useRef(null)
   const [showModal, setShowModal] = useState(false)  
   
@@ -31,21 +31,21 @@ function App() {
     </div>
    
     {showModal && 
-      <Modal description="Are you sure to delete all?"
+      <Modal description={`Are you sure to delete ${select}?`}
              setShowModal={setShowModal}
-             clearTodos={clearTodos}/>} 
+             deleteTodos={deleteTodos}/>} 
 
     <Form />
     <div className="listDiv" 
          ref={todoParentDiv}>
-     {todos.length > 0 && 
+     {filteredTodos.length > 0 && 
       (<>
-        <List/>
         <button 
           className='clearBtn' 
           onClick={()=>setShowModal(true)}>
-          delete all
+          Delete {select}
         </button>
+        <List/>
       </>
       )}  
     </div>
