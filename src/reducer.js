@@ -9,9 +9,9 @@ const reducer = (state, action)=>{
             if(state.select === 'All')
                newTodos = []
             else if(state.select === 'Completed')
-                newTodos = state.todos.filter((todo)=> todo.completed !== true)
+                newTodos = state.todos.filter((todo)=> !todo.completed)
             else if(state.select === 'Uncompleted')
-                newTodos = state.todos.filter((todo)=> todo.completed === true)
+                newTodos = state.todos.filter((todo)=> todo.completed)
             state = {...state, todos:newTodos}
         break
         case 'DELETE_TODO':

@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import reducer from './reducer'
 import uuid from 'react-uuid'
 
@@ -83,10 +83,10 @@ const AppProvider = ({ children }) => {
     let filteredTodos
     switch(state.select){
       case 'Completed':
-        filteredTodos = state.todos.filter((todo)=> todo.completed ===true)
+        filteredTodos = state.todos.filter((todo)=> todo.completed)
       break
       case 'Uncompleted':
-        filteredTodos = state.todos.filter((todo)=> todo.completed ===false)
+        filteredTodos = state.todos.filter((todo)=> !todo.completed )
       break
       default:
         filteredTodos = state.todos
@@ -120,6 +120,15 @@ const AppProvider = ({ children }) => {
       showAlert(true, 'success', 'todo added!')
     }
   }
+
+  useEffect(()=>{
+    localStorage.setItem('todos', JSON.stringify(state.todos));
+  }, [state.todos])
+  
+  useEffect(()=>{
+    filterTodos()
+  }, [state.select, state.todos])
+
     return (
       <AppContext.Provider
         value={{...state, handleSubmit, handleTodoText,handleSelect,

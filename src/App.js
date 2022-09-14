@@ -7,24 +7,15 @@ function App() {
   const { todos, select, alert, deleteTodos, filterTodos, filteredTodos  } = useGlobalContext()
   const todoParentDiv = useRef(null)
   const [showModal, setShowModal] = useState(false)  
-  
-  useEffect(()=>{
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos])
-  
-  useEffect(()=>{
-    filterTodos()
-  }, [select, todos])
 
   useEffect(()=>{
     todoParentDiv.current && autoAnimate(todoParentDiv.current)
   },[todoParentDiv])
 
-
   return (
   <div className="container">
     <h1>Todo List</h1>
-    <div style={{height:'3rem'}}>
+    <div style={{height:'3.5rem'}}>
       {
         alert.show && <Alert/>
       }
