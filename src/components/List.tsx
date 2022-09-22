@@ -1,8 +1,9 @@
 import React from 'react'
 import Todo  from './Todo'
-import { useGlobalContext } from '../context'
-const List = () => {
-  const { filteredTodos } = useGlobalContext()
+import { useGlobalContext } from '../state/context'
+import { TodoAppContext } from '../types/todos'
+const List:React.FC = () => {
+  const { filteredTodos } = useGlobalContext() as TodoAppContext
   return (
     <>
      {filteredTodos.map((todo, index)=>{

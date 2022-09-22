@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../state/context';
+import { TodoAppContext } from '../types/todos';
 
-const Alert = () => {
-  const { alert, todos, showAlert} = useGlobalContext()
+const Alert:React.FC = () => {
+  const { alert, todos, showAlert} = useGlobalContext() as TodoAppContext
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       showAlert(false, '', '');
-    }, 1400);
+    }, 1100);
     return () => clearTimeout(timeout);
-  }, [todos]);
+  }, [todos, showAlert]);
   
   return <div className={`alertDiv alert-${alert.type}`}>{alert.msg}</div>;
 }

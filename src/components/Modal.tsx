@@ -1,6 +1,7 @@
 import React from 'react'
+import  { ModalProps } from '../types/todos'
 
-const Modal = ({description, setShowModal, deleteTodos}) => {
+const Modal:React.FC<ModalProps> = ({description, setShowModal, deleteTodos}:ModalProps) => {
 
   const handleConfirmClick = ()=>{
     setShowModal(false)

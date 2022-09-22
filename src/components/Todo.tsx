@@ -1,13 +1,14 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { BsChevronUp, BsChevronDown } from 'react-icons/bs'
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../state/context';
 import { FaCheckSquare } from 'react-icons/fa'
+import { TodoAppContext, TodoProps } from '../types/todos';
 
-const Todo = ({todo, index})=>{
+const Todo:React.FC<TodoProps> = ({todo, index}:TodoProps)=>{
 
-    const { completed, text, id} = todo
-    const { editTodo, checkTodo, deleteTodo, moveTodo } = useGlobalContext()
+    const { completed, text, id} = todo 
+    const { editTodo, checkTodo, deleteTodo, moveTodo } = useGlobalContext() as TodoAppContext
     
     return (
         <div className={`todoDiv ${completed ? 'todoCompleted' : null}`}>

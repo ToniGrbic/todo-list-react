@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react'
-import { useGlobalContext } from '../context'
-const Form = () => {
+import React, { useLayoutEffect, useRef } from 'react'
+import { useGlobalContext } from '../state/context'
+import { TodoAppContext } from '../types/todos'
+
+const Form:React.FC = () => {
     const { todoText, editFlag, handleSubmit, handleTodoText, handleSelect } =
-     useGlobalContext()
+     useGlobalContext() as TodoAppContext
      
-    const inputRef = React.useRef()
-    useEffect(()=>{
-        inputRef.current.focus()
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    useLayoutEffect(()=>{
+        if(inputRef.current)
+            inputRef.current.focus()
     },[])
 
     return (
         <>
-        <form id="Form" onSubmit={handleSubmit} >
+        <form id="Form" onSubmit={handleSubmit}>
             <div className="submitDiv">
                 <input type="text" name="" id="text-input" 
                     value={todoText} ref={inputRef}

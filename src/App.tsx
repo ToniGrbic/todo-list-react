@@ -1,14 +1,15 @@
-import React,{ useEffect, useRef, useState } from 'react'
+import React,{ useLayoutEffect, useRef, useState } from 'react'
 import { List, Alert, Form, Modal } from './components'
-import { useGlobalContext } from './context'
-import autoAnimate  from '@formkit/auto-animate'
+import { useGlobalContext } from './state/context'
+import autoAnimate from '@formkit/auto-animate'
+import { TodoAppContext } from './types/todos'
 
 function App() {
-  const { todos, select, alert, deleteTodos, filterTodos, filteredTodos  } = useGlobalContext()
-  const todoParentDiv = useRef(null)
-  const [showModal, setShowModal] = useState(false)  
+  const { select, alert, deleteTodos, filteredTodos } = useGlobalContext() as TodoAppContext
+  const todoParentDiv = useRef<HTMLDivElement>(null)
+  const [showModal, setShowModal] = useState<boolean>(false)  
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     todoParentDiv.current && autoAnimate(todoParentDiv.current)
   },[todoParentDiv])
 
@@ -16,16 +17,13 @@ function App() {
   <div className="container">
     <h1>Todo List</h1>
     <div style={{height:'3.5rem'}}>
-      {
-        alert.show && <Alert/>
-      }
+      { alert.show && <Alert/>}
     </div>
    
     {showModal && 
       <Modal description={`Are you sure to delete ${select}?`}
              setShowModal={setShowModal}
-             deleteTodos={deleteTodos}/>} 
-
+             deleteTodos={deleteTodos}/>}
     <Form />
     <div className="listDiv" 
          ref={todoParentDiv}>
