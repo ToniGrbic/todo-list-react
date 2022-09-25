@@ -8,7 +8,8 @@ import { TodoAppContext, TodoProps } from '../types/todos';
 const Todo:React.FC<TodoProps> = ({todo, index}:TodoProps)=>{
 
     const { completed, text, id} = todo 
-    const { editTodo, checkTodo, deleteTodo, moveTodo } = useGlobalContext() as TodoAppContext
+    const { editTodo, checkTodo, deleteTodo, moveTodo } = 
+            useGlobalContext() as TodoAppContext
     
     return (
         <div className={`todoDiv ${completed ? 'todoCompleted' : null}`}>

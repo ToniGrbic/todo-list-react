@@ -1,5 +1,5 @@
 
-import React, { useContext, useReducer, useEffect, useCallback } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import reducer from './reducer'
 import { TodoAppContext, ITodo, TodoAppState, actionType, providerProps } from '../types/todos'
 const uuid = require('react-uuid')
@@ -29,10 +29,9 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
  
   const [state, dispatch] = useReducer(reducer, defaultState)
 
-  const showAlert = useCallback(
-    (show:boolean = true, type:string = '', msg:string = ''):void=>{
+  const showAlert = (show:boolean = true, type:string = '', msg:string = ''):void=>{
       dispatch({type: actionType.SHOW_ALERT, payload:{show, type, msg}})
-  },[])
+  }
 
   const deleteTodos = ():void=>{
     dispatch({type:actionType.DELETE_TODOS})

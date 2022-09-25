@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-export interface providerProps { children: ReactNode }
+export type providerProps = { children: ReactNode }
 
 export enum actionType{
     SHOW_ALERT,
@@ -36,26 +36,26 @@ export interface TodoAppContext extends TodoAppState{
     handleSelect: (value:string)=> void,
     handleSubmit: (e:React.FormEvent<HTMLFormElement>)=>void,
     showAlert: (show:boolean, type:string, msg:string)=> void,
-  }
+}
 
-export interface ITodo {
+export type ITodo = {
     readonly id:string,
     text:string,
     completed:boolean,
-  }
+}
 
-export interface IAction{
+export type IAction ={
     type:actionType,
     payload?:any
 }
 
-export interface ModalProps{
+export type ModalProps ={
     description:string,
     setShowModal: (state:boolean)=>void,
     deleteTodos: ()=>void
 }
 
-export interface TodoProps{
+export type TodoProps ={
     todo:ITodo,
     index:number
 }
