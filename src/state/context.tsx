@@ -1,7 +1,8 @@
-
 import React, { useContext, useReducer, useEffect } from 'react';
 import reducer from './reducer'
-import { TodoAppContext, ITodo, TodoAppState, actionType, providerProps } from '../types/todos'
+import { TodoAppContext, ITodo, TodoAppState, actionType, providerProps } 
+from '../types/todos'
+
 const uuid = require('react-uuid')
 
 const getLocalStorage = ():ITodo[] => {
@@ -16,6 +17,7 @@ const getLocalStorage = ():ITodo[] => {
 const defaultState:TodoAppState = {
     todos: getLocalStorage(),
     todoText: '',
+    dateTime:{date:'', time:''},
     editID: null,
     editFlag: false,
     alert: { show:false, type:'', msg:''},
@@ -61,6 +63,12 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
     dispatch({type:actionType.SET_TODO_TEXT, payload:currentTodo?.text})
   } 
 
+  const handleDateTime =(value:string):void=>{
+    const dateAndTime = value.split('T')
+    const [date, time] = dateAndTime
+    dispatch({type:actionType.SET_DATE_TIME, payload:{date, time}})
+  }
+
   const handleTodoText = (value:string):void=>{
     if(value.length < 50)
       dispatch({type:actionType.SET_TODO_TEXT, payload:value})
@@ -87,25 +95,24 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
       showAlert( true, 'danger', 'input empty, cant sumbit!')
     }
     else if(state.todoText && state.editFlag){
-      const editedTodos = state.todos.map((todo:ITodo)=>{
-        if(todo.id === state.editID){
-          return {...todo, text: state.todoText}
-        }
-        return todo
-      })
-      dispatch({type:actionType.SET_TODOS, payload:editedTodos})
+      dispatch({type:actionType.EDIT_TODO})
       dispatch({type:actionType.SET_EDIT_FLAG, payload:false})
       dispatch({type:actionType.SET_TODO_TEXT, payload:''})
       showAlert(true, 'success', 'todo edited!')
     }
     else{
-      const newTodo = { id: uuid(), text:state.todoText, completed:false} as ITodo
+      const newTodo = { 
+         id: uuid(), 
+         text:state.todoText,
+         dateTime:state.dateTime, 
+         completed:false
+      } as ITodo
       dispatch({type:actionType.ADD_TODO, payload:newTodo})
       dispatch({type:actionType.SET_TODO_TEXT, payload:''})
       showAlert(true, 'success', 'todo added!')
     }
   }
-
+  
   useEffect(()=>{
     localStorage.setItem('todos', JSON.stringify(state.todos));
   }, [state.todos])
@@ -132,8 +139,8 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
     return (
       <AppContext.Provider
         value={{...state, handleSubmit, handleTodoText, handleSelect,
-                 deleteTodos, deleteTodo, checkTodo, 
-                showAlert, editTodo, moveTodo }}>
+                 deleteTodos, deleteTodo, checkTodo, handleDateTime,
+                 showAlert, editTodo, moveTodo }}>
         {children}
       </AppContext.Provider>
     );

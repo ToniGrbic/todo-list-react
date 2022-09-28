@@ -7,6 +7,7 @@
   --danger-color: #f8d7da;
   --grey-color: #E1E1E1;
   --light-grey-color:#EEEEEE;
+  --blue-color:rgba(93,128,187,1)
 }
 
 *{
@@ -31,6 +32,11 @@ body{
 h1{
   color:white;
   text-align: center;
+}
+
+h4{
+  margin:2px;
+  padding:5px;
 }
 
 .alertDiv{
@@ -67,6 +73,16 @@ select{
   color: black;
   font-weight:bold;
   transition: 500ms;
+}
+
+.datetimeDiv{
+  background:white;
+  width:54%;
+  margin-top:5px;
+  margin-bottom:5px;
+  padding:5px;
+  font-weight:bold;
+  border-radius:4px;
 }
 
 select,button :hover{
@@ -138,6 +154,10 @@ select,button :hover{
   display: flex;
   justify-content: space-between;
   white-space: normal;
+}
+
+h4:first-child{
+  color:var(--blue-color)
 }
 
 .todoText{

@@ -1,11 +1,12 @@
-import React,{ useLayoutEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState, ReactElement } from 'react'
 import { List, Alert, Form, Modal } from './components'
 import { useGlobalContext } from './state/context'
 import autoAnimate from '@formkit/auto-animate'
 import { TodoAppContext } from './types/todos'
 
-function App() {
-  const { select, alert, deleteTodos, filteredTodos } = useGlobalContext() as TodoAppContext
+const App:React.FC = ():ReactElement=> {
+
+  const { select, alert, filteredTodos } = useGlobalContext() as TodoAppContext
   const todoParentDiv = useRef<HTMLDivElement>(null)
   const [showModal, setShowModal] = useState<boolean>(false)  
 
@@ -21,9 +22,8 @@ function App() {
     </div>
    
     {showModal && 
-      <Modal description={`Are you sure to delete ${select}?`}
-             setShowModal={setShowModal}
-             deleteTodos={deleteTodos}/>}
+    <Modal description={`Are you sure to delete ${select}?`}
+           setShowModal={setShowModal}/>}
     <Form />
     <div className="listDiv" 
          ref={todoParentDiv}>
@@ -39,7 +39,6 @@ function App() {
       )}  
     </div>
   </div>
-)
-}
+)}
 
 export default App

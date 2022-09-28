@@ -1,8 +1,13 @@
-import React from 'react'
-import  { ModalProps } from '../types/todos'
+import React , {ReactElement}from 'react'
+import  { ModalProps, TodoAppContext } from '../types/todos'
+import { useGlobalContext } from '../state/context'
 
-const Modal:React.FC<ModalProps> = ({description, setShowModal, deleteTodos}:ModalProps) => {
-
+const Modal:React.FC<ModalProps> = 
+  ({description, setShowModal}:ModalProps)
+  :ReactElement => {
+  
+  const { deleteTodos } = useGlobalContext() as TodoAppContext
+  
   const handleConfirmClick = ()=>{
     setShowModal(false)
     deleteTodos()

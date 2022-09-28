@@ -8,6 +8,24 @@ const reducer = (state:TodoAppState, action:IAction):TodoAppState=>{
         case actionType.SHOW_ALERT:
             state = {...state, alert: payload}
         break
+        case actionType.SET_EDIT_ID:
+            state={...state, editID: payload}
+        break
+        case actionType.SET_EDIT_FLAG:
+            state={...state, editFlag: payload}
+        break
+        case actionType.SET_FILTERED_TODOS:
+            state={...state, filteredTodos:payload}
+        break
+        case actionType.SET_SELECT:
+            state= {...state, select:payload}
+        break
+        case actionType.SET_TODO_TEXT:
+            state={...state, todoText:payload}
+        break
+        case actionType.SET_DATE_TIME:
+            state={...state, dateTime:payload}
+        break
         case actionType.DELETE_TODOS:
             if(state.select === 'All')
                newTodos = []
@@ -16,6 +34,9 @@ const reducer = (state:TodoAppState, action:IAction):TodoAppState=>{
             else if(state.select === 'Uncompleted')
                 newTodos = state.todos.filter((todo)=> todo.completed)
             state = {...state, todos:newTodos }
+        break
+        case actionType.ADD_TODO:
+              state = {...state, todos:[...state.todos, payload]}
         break
         case actionType.DELETE_TODO:
             newTodos = state.todos.filter((todo)=> todo.id !== payload)
@@ -30,26 +51,14 @@ const reducer = (state:TodoAppState, action:IAction):TodoAppState=>{
               })
               state={...state, todos:newTodos}
         break
-        case actionType.SET_EDIT_ID:
-            state={...state, editID: payload}
-        break
-        case actionType.SET_EDIT_FLAG:
-            state={...state, editFlag: payload}
-        break
-        case actionType.ADD_TODO:
-              state = {...state, todos:[...state.todos, payload]}
-        break
-        case actionType.SET_TODOS:
-            state={...state, todos:payload}
-        break
-        case actionType.SET_FILTERED_TODOS:
-            state={...state, filteredTodos:payload}
-        break
-        case actionType.SET_SELECT:
-            state= {...state, select:payload}
-        break
-        case actionType.SET_TODO_TEXT:
-            state={...state, todoText:payload}
+        case actionType.EDIT_TODO:
+             newTodos = state.todos.map((todo:ITodo)=>{
+                if(todo.id === state.editID){
+                  return {...todo, text: state.todoText}
+                }
+                return todo
+              })
+              state={...state, todos:newTodos}
         break
         case actionType.MOVE_TODO:
             const { id, delta } = payload

@@ -1,24 +1,25 @@
 import { ReactNode } from 'react'
-export type providerProps = { children: ReactNode }
 
 export enum actionType{
     SHOW_ALERT,
-    DELETE_TODOS,
-    DELETE_TODO,
-    CHECK_TODO,
     SET_EDIT_ID,
     SET_EDIT_FLAG,
-    ADD_TODO,
-    SET_TODOS,
     SET_FILTERED_TODOS,
     SET_SELECT,
     SET_TODO_TEXT,
+    SET_DATE_TIME,
+    DELETE_TODOS,
+    ADD_TODO,
+    DELETE_TODO,
+    CHECK_TODO,
+    EDIT_TODO,
     MOVE_TODO
 }
 
 export interface TodoAppState {
     todos: ITodo[],
     todoText: string,
+    dateTime: { date:string, time:string},
     editID: string | null,
     editFlag: boolean,
     alert: { show:boolean, type:string, msg:string},
@@ -33,32 +34,35 @@ export interface TodoAppContext extends TodoAppState{
     deleteTodo: (id:string)=>void,
     moveTodo: (id:string, type:string)=>void,
     handleTodoText: (value:string)=> void,
+    handleDateTime: (value:string)=>void,
     handleSelect: (value:string)=> void,
     handleSubmit: (e:React.FormEvent<HTMLFormElement>)=>void,
     showAlert: (show:boolean, type:string, msg:string)=> void,
 }
 
-export type ITodo = {
+export interface ITodo {
     readonly id:string,
     text:string,
+    dateTime:{date:string, time:string},
     completed:boolean,
 }
 
-export type IAction ={
+export interface IAction {
     type:actionType,
     payload?:any
 }
 
-export type ModalProps ={
+export type ModalProps = {
     description:string,
-    setShowModal: (state:boolean)=>void,
-    deleteTodos: ()=>void
+    setShowModal: (state:boolean)=>void
 }
 
-export type TodoProps ={
+export type TodoProps = {
     todo:ITodo,
     index:number
 }
 
-
+export type providerProps = { 
+    children: ReactNode 
+}
 
