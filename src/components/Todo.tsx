@@ -1,4 +1,4 @@
-import React, {useEffect, ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { BsChevronUp, BsChevronDown } from 'react-icons/bs'
 import { useGlobalContext } from '../state/context';
@@ -11,9 +11,6 @@ const Todo:React.FC<TodoProps> =
     const { completed, text, id, dateTime} = todo 
     const { editTodo, checkTodo, deleteTodo, moveTodo } = 
             useGlobalContext() as TodoAppContext
-    useEffect(() => {
-      console.log(dateTime)
-    }, [])
     
     return (
         <div className={`todoDiv ${completed ? 'todoCompleted' : null}`}>
@@ -28,7 +25,10 @@ const Todo:React.FC<TodoProps> =
           </div>
           
           <div className="todoText">
-            <h4>{dateTime.date} Time: {dateTime.time}</h4>
+            {dateTime.date &&
+              <h4 className="dateTime">
+                {dateTime.date} Time: {dateTime.time}
+              </h4>}
             <h4>{text}</h4>
           </div>
 

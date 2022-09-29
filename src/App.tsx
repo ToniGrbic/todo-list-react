@@ -13,7 +13,7 @@ const App:React.FC = ():ReactElement=> {
   useLayoutEffect(()=>{
     todoParentDiv.current && autoAnimate(todoParentDiv.current)
   },[todoParentDiv])
-
+  
   return (
   <div className="container">
     <h1>Todo List</h1>

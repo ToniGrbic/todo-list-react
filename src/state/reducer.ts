@@ -17,8 +17,14 @@ const reducer = (state:TodoAppState, action:IAction):TodoAppState=>{
         case actionType.SET_FILTERED_TODOS:
             state={...state, filteredTodos:payload}
         break
-        case actionType.SET_SELECT:
+        case actionType.SET_TODOS:
+            state={...state, todos:payload}
+        break
+        case actionType.SET_SHOW_SELECT:
             state= {...state, select:payload}
+        break
+        case actionType.SET_SORT_SELECT:
+            state= {...state, sort:payload}
         break
         case actionType.SET_TODO_TEXT:
             state={...state, todoText:payload}

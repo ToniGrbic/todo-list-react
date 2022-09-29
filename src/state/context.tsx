@@ -1,6 +1,6 @@
-import React, { useContext, useReducer, useEffect } from 'react';
+import React, { useContext, useReducer, useEffect, ReactElement } from 'react';
 import reducer from './reducer'
-import { TodoAppContext, ITodo, TodoAppState, actionType, providerProps } 
+import { TodoAppContext, ITodo, TodoAppState, actionType, providerProps, DateTime } 
 from '../types/todos'
 
 const uuid = require('react-uuid')
@@ -22,30 +22,32 @@ const defaultState:TodoAppState = {
     editFlag: false,
     alert: { show:false, type:'', msg:''},
     select: 'All',
+    sort: 'Newest',
     filteredTodos:[],
 }
 
 const AppContext = React.createContext<TodoAppContext | null>(null)
 
-const AppProvider:React.FC<providerProps> = ({children}) => {
- 
+const AppProvider:React.FC<providerProps>  
+      =({children}):ReactElement => {
   const [state, dispatch] = useReducer(reducer, defaultState)
 
-  const showAlert = (show:boolean = true, type:string = '', msg:string = ''):void=>{
+  const showAlert = (show:boolean = true, type:string = '', msg:string = '')=>{
       dispatch({type: actionType.SHOW_ALERT, payload:{show, type, msg}})
   }
 
-  const deleteTodos = ():void=>{
+  const deleteTodos = ()=>{
     dispatch({type:actionType.DELETE_TODOS})
     showAlert(true, 'danger', 'todos deleted!')
   }
 
-  const deleteTodo = (id:string):void=>{
+  const deleteTodo = (id:string)=>{
    dispatch({type:actionType.DELETE_TODO, payload:id})
    showAlert(true, 'danger', 'todo deleted!')
+   
   }
 
-  const checkTodo = (id:string):void=>{
+  const checkTodo = (id:string)=>{
     dispatch({type:actionType.CHECK_TODO, payload:id})
 
     const currentTodo = state.todos.find((todo:ITodo)=>todo.id === id)
@@ -56,20 +58,20 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
     }
   }
 
-  const editTodo = (id:string):void=>{
+  const editTodo = (id:string)=>{
     dispatch({type:actionType.SET_EDIT_FLAG, payload:true})
     dispatch({type:actionType.SET_EDIT_ID, payload:id})
     const currentTodo = state.todos.find((todo:ITodo)=>todo.id === id)
     dispatch({type:actionType.SET_TODO_TEXT, payload:currentTodo?.text})
   } 
 
-  const handleDateTime =(value:string):void=>{
+  const handleDateTime =(value:string)=>{
     const dateAndTime = value.split('T')
     const [date, time] = dateAndTime
     dispatch({type:actionType.SET_DATE_TIME, payload:{date, time}})
   }
 
-  const handleTodoText = (value:string):void=>{
+  const handleTodoText = (value:string)=>{
     if(value.length < 50)
       dispatch({type:actionType.SET_TODO_TEXT, payload:value})
     else {
@@ -77,11 +79,15 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
     } 
   }
 
-  const handleSelect = (value:string):void=>{
-      dispatch({type:actionType.SET_SELECT, payload:value})
+  const handleShowSelect = (value:string) => {
+      dispatch({type:actionType.SET_SHOW_SELECT, payload:value})
   }
 
-  const moveTodo = (id:string, type:string):void=>{
+  const handleSortSelect = (value:string)=>{
+      dispatch({type:actionType.SET_SORT_SELECT, payload:value})
+  }
+
+  const moveTodo = (id:string, type:string)=>{
     if(type === 'Up'){
       dispatch({type:actionType.MOVE_TODO, payload:{id, delta:-1}})
     }else if(type === 'Down'){
@@ -89,7 +95,7 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
     }
   }
 
-  const handleSubmit = (e:React.FormEvent):void=>{
+  const handleSubmit = (e:React.FormEvent)=>{
     e.preventDefault()
     if(!state.todoText){
       showAlert( true, 'danger', 'input empty, cant sumbit!')
@@ -103,6 +109,7 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
     else{
       const newTodo = { 
          id: uuid(), 
+         createdAt: new Date().getTime(),
          text:state.todoText,
          dateTime:state.dateTime, 
          completed:false
@@ -113,34 +120,70 @@ const AppProvider:React.FC<providerProps> = ({children}) => {
     }
   }
   
-  useEffect(()=>{
-    localStorage.setItem('todos', JSON.stringify(state.todos));
-  }, [state.todos])
-  
-  useEffect(()=>{
-    const filterTodos = ():void=>{
+   const filterTodos = ():void=>{
       let filteredTodos
+      
       switch(state.select){
         case 'Completed':
           filteredTodos = state.todos.filter((todo:ITodo)=> todo.completed)
         break
         case 'Uncompleted':
-          filteredTodos = state.todos.filter((todo:ITodo)=> !todo.completed )
+          filteredTodos = state.todos.filter((todo:ITodo)=> !todo.completed)
         break
         default:
+          console.log(state.todos)
           filteredTodos = state.todos
         break
       }
       dispatch({type:actionType.SET_FILTERED_TODOS, payload:filteredTodos})
     }
+
+    const sortTodos = ():void=>{
+      let sortedTodos
+      const todos = [...state.todos]
+      
+      switch(state.sort){
+        case 'Date Ascending':
+          sortedTodos = todos.sort((a,b)=>sortByDate(a.dateTime,b.dateTime))
+        break
+        case 'Date Descending':
+          sortedTodos = todos.sort((a,b)=>sortByDate(b.dateTime,a.dateTime))
+        break
+        case 'Newest':
+          sortedTodos = todos.sort((a,b)=>sortByCreated(a.createdAt, b.createdAt))
+        break
+        case 'Oldest':
+          sortedTodos = todos.sort((a,b)=>sortByCreated(b.createdAt, a.createdAt))
+        break
+      }
+      dispatch({type:actionType.SET_TODOS, payload:sortedTodos})
+    }
+
+    const sortByDate = (a:DateTime, b:DateTime):number =>{
+      return new Date(a.date).valueOf() - new Date(b.date).valueOf()
+    }
+
+    const sortByCreated = (a:number, b:number):number =>{
+      return a - b;
+    }
+
+  useEffect(()=>{
+    localStorage.setItem('todos', JSON.stringify(state.todos));
+  }, [state.todos])
+
+  useEffect(()=>{
     filterTodos()
-  }, [state.select, state.todos])
+  }, [state.todos, state.select])
+
+  useEffect(()=>{
+    sortTodos()
+  }, [state.sort])
 
     return (
       <AppContext.Provider
-        value={{...state, handleSubmit, handleTodoText, handleSelect,
-                 deleteTodos, deleteTodo, checkTodo, handleDateTime,
-                 showAlert, editTodo, moveTodo }}>
+        value={{...state, handleSubmit, handleTodoText, handleShowSelect,
+                 handleSortSelect, deleteTodos, deleteTodo, checkTodo, 
+                 handleDateTime, showAlert, editTodo, moveTodo }}>
         {children}
       </AppContext.Provider>
     );

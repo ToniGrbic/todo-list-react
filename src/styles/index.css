@@ -73,6 +73,7 @@ select{
   color: black;
   font-weight:bold;
   transition: 500ms;
+  width:95px;
 }
 
 .datetimeDiv{
@@ -80,6 +81,18 @@ select{
   width:54%;
   margin-top:5px;
   margin-bottom:5px;
+  padding:5px;
+  font-weight:bold;
+  border-radius:4px;
+}
+
+.selectDiv{
+  display:inline-block;
+  background:white;
+  width:160px;
+  margin-top:5px;
+  margin-bottom:5px;
+  margin-right:5px;
   padding:5px;
   font-weight:bold;
   border-radius:4px;
@@ -124,6 +137,8 @@ select,button :hover{
 
 .todoButtonsContainer > button{
   height:25px;
+  margin-right:3px;
+  margin-left:3px;
 }
 
 .bsChev{
@@ -145,7 +160,6 @@ select,button :hover{
 }  
 
 .todoDiv{
-  //height: 60px;
   background-color: white;
   width: 96%;
   border-radius: 5px;
@@ -156,7 +170,7 @@ select,button :hover{
   white-space: normal;
 }
 
-h4:first-child{
+.dateTime{
   color:var(--blue-color)
 }
 

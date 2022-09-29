@@ -5,7 +5,9 @@ export enum actionType{
     SET_EDIT_ID,
     SET_EDIT_FLAG,
     SET_FILTERED_TODOS,
-    SET_SELECT,
+    SET_TODOS,
+    SET_SHOW_SELECT,
+    SET_SORT_SELECT,
     SET_TODO_TEXT,
     SET_DATE_TIME,
     DELETE_TODOS,
@@ -19,11 +21,12 @@ export enum actionType{
 export interface TodoAppState {
     todos: ITodo[],
     todoText: string,
-    dateTime: { date:string, time:string},
+    dateTime: { date:string, time:string },
     editID: string | null,
     editFlag: boolean,
-    alert: { show:boolean, type:string, msg:string},
+    alert: {show:boolean, type:string, msg:string}
     select: string,
+    sort: string,
     filteredTodos:ITodo[],
 }
 
@@ -35,21 +38,29 @@ export interface TodoAppContext extends TodoAppState{
     moveTodo: (id:string, type:string)=>void,
     handleTodoText: (value:string)=> void,
     handleDateTime: (value:string)=>void,
-    handleSelect: (value:string)=> void,
+    handleShowSelect: (value:string)=> void,
+    handleSortSelect: (value:string)=>void,
     handleSubmit: (e:React.FormEvent<HTMLFormElement>)=>void,
-    showAlert: (show:boolean, type:string, msg:string)=> void,
+    showAlert: (show:boolean, type:string, msg:string) => void,
 }
 
 export interface ITodo {
     readonly id:string,
+    readonly createdAt: number,
     text:string,
-    dateTime:{date:string, time:string},
+    dateTime:{ date:string, time:string },
     completed:boolean,
+    
 }
 
 export interface IAction {
     type:actionType,
     payload?:any
+}
+
+export type DateTime = {
+    date:string,
+    time:string
 }
 
 export type ModalProps = {
