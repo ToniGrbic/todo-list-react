@@ -115,8 +115,7 @@ const AppProvider:React.FC<providerProps>
     }
   }
   
-
-   const filterTodos = useCallback(():void=>{
+  const filterTodos = useCallback(():void=>{
       let filteredTodos
       
       switch(state.select){
@@ -144,10 +143,10 @@ const AppProvider:React.FC<providerProps>
         case 'Date Descending':
           sortedTodos = todos.sort((a,b)=>sortByDate(b.dateTime,a.dateTime))
         break
-        case 'Newest':
+        case 'Oldest':
           sortedTodos = todos.sort((a,b)=>sortByCreated(a.createdAt, b.createdAt))
         break
-        case 'Oldest':
+        case 'Newest':
           sortedTodos = todos.sort((a,b)=>sortByCreated(b.createdAt, a.createdAt))
         break
       }
