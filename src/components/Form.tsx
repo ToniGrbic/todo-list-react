@@ -4,7 +4,7 @@ import { TodoAppContext } from '../types/todos'
 
 
 const Form:React.FC = ():ReactElement => {
-    const { todoText, editFlag, handleSubmit, handleTodoText, 
+    const { todoText, editFlag, sort, handleSubmit, handleTodoText, 
             handleDateTime, handleShowSelect, handleSortSelect } = useGlobalContext() as TodoAppContext
      
     const inputRef = useRef<HTMLInputElement>(null)
@@ -14,6 +14,7 @@ const Form:React.FC = ():ReactElement => {
             inputRef.current.focus()
         }         
     },[editFlag])
+
     return (
         <>
         <form id="Form" onSubmit={handleSubmit}>
@@ -34,8 +35,8 @@ const Form:React.FC = ():ReactElement => {
             <div>
             <div className="selectDiv">
                 <label htmlFor="">Show: </label>
-                <select name="select" 
-                    onChange={(e)=>handleShowSelect(e.target.value)}>
+                <select name="select"
+                        onChange={(e)=>handleShowSelect(e.target.value)}>
                     <option value="All">All</option>
                     <option value="Completed">Completed</option>
                     <option value="Uncompleted">Uncompleted</option>
@@ -43,8 +44,9 @@ const Form:React.FC = ():ReactElement => {
             </div>
             <div className="selectDiv">
                 <label>Sort By: </label>
-                <select name="sort"
-                    onChange={(e)=>handleSortSelect(e.target.value)}>
+                <select name="sort" 
+                        value={sort}
+                        onChange={(e)=>handleSortSelect(e.target.value)}>
                     <option value="Newest">Newest</option>
                     <option value="Oldest">Oldest</option>
                     <option value="Date Ascending">Date Ascending</option>

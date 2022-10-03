@@ -11,7 +11,8 @@ export enum actionType{
     SET_TODO_TEXT,
     SET_DATE_TIME,
     DELETE_TODOS,
-    ADD_TODO,
+    ADD_TODO_END,
+    ADD_TODO_BEGINING,
     DELETE_TODO,
     CHECK_TODO,
     EDIT_TODO,
@@ -50,7 +51,6 @@ export interface ITodo {
     text:string,
     dateTime:{ date:string, time:string },
     completed:boolean,
-    
 }
 
 export interface IAction {

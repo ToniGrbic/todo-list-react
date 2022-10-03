@@ -41,8 +41,11 @@ const reducer = (state:TodoAppState, action:IAction):TodoAppState=>{
                 newTodos = state.todos.filter((todo)=> todo.completed)
             state = {...state, todos:newTodos }
         break
-        case actionType.ADD_TODO:
+        case actionType.ADD_TODO_END:
               state = {...state, todos:[...state.todos, payload]}
+        break
+        case actionType.ADD_TODO_BEGINING:
+            state = {...state, todos:[payload, ...state.todos]}
         break
         case actionType.DELETE_TODO:
             newTodos = state.todos.filter((todo)=> todo.id !== payload)

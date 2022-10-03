@@ -1,18 +1,9 @@
-import React, { useContext, useReducer, useEffect, ReactElement } from 'react';
+import React, { useContext, useReducer, useEffect, useCallback, ReactElement } from 'react';
 import reducer from './reducer'
-import { TodoAppContext, ITodo, TodoAppState, actionType, providerProps, DateTime } 
-from '../types/todos'
+import { TodoAppContext, ITodo, TodoAppState, actionType, providerProps } from '../types/todos'
+import { getLocalStorage, sortByDate, sortByCreated } from '../utils/utils'
 
 const uuid = require('react-uuid')
-
-const getLocalStorage = ():ITodo[] => {
-    let todos = localStorage.getItem('todos');
-    if (todos) {
-      return (todos = JSON.parse(localStorage.getItem('todos') as string));
-    } else {
-      return [];
-    }
-}
 
 const defaultState:TodoAppState = {
     todos: getLocalStorage(),
@@ -44,7 +35,6 @@ const AppProvider:React.FC<providerProps>
   const deleteTodo = (id:string)=>{
    dispatch({type:actionType.DELETE_TODO, payload:id})
    showAlert(true, 'danger', 'todo deleted!')
-   
   }
 
   const checkTodo = (id:string)=>{
@@ -65,7 +55,7 @@ const AppProvider:React.FC<providerProps>
     dispatch({type:actionType.SET_TODO_TEXT, payload:currentTodo?.text})
   } 
 
-  const handleDateTime =(value:string)=>{
+  const handleDateTime = (value:string)=>{
     const dateAndTime = value.split('T')
     const [date, time] = dateAndTime
     dispatch({type:actionType.SET_DATE_TIME, payload:{date, time}})
@@ -114,13 +104,19 @@ const AppProvider:React.FC<providerProps>
          dateTime:state.dateTime, 
          completed:false
       } as ITodo
-      dispatch({type:actionType.ADD_TODO, payload:newTodo})
+      if(state.sort === 'Date Ascending' || state.sort === 'Date Descending')
+         dispatch({type:actionType.SET_SORT_SELECT, payload:'Newest'})
+      if(state.sort === 'Oldest')
+        dispatch({type:actionType.ADD_TODO_END, payload:newTodo})
+      else if(state.sort === 'Newest')
+        dispatch({type:actionType.ADD_TODO_BEGINING, payload:newTodo})
       dispatch({type:actionType.SET_TODO_TEXT, payload:''})
       showAlert(true, 'success', 'todo added!')
     }
   }
   
-   const filterTodos = ():void=>{
+
+   const filterTodos = useCallback(():void=>{
       let filteredTodos
       
       switch(state.select){
@@ -131,14 +127,13 @@ const AppProvider:React.FC<providerProps>
           filteredTodos = state.todos.filter((todo:ITodo)=> !todo.completed)
         break
         default:
-          console.log(state.todos)
           filteredTodos = state.todos
         break
       }
       dispatch({type:actionType.SET_FILTERED_TODOS, payload:filteredTodos})
-    }
+    }, [state.todos, state.select])
 
-    const sortTodos = ():void=>{
+    const sortTodos = useCallback(():void=>{
       let sortedTodos
       const todos = [...state.todos]
       
@@ -157,15 +152,7 @@ const AppProvider:React.FC<providerProps>
         break
       }
       dispatch({type:actionType.SET_TODOS, payload:sortedTodos})
-    }
-
-    const sortByDate = (a:DateTime, b:DateTime):number =>{
-      return new Date(a.date).valueOf() - new Date(b.date).valueOf()
-    }
-
-    const sortByCreated = (a:number, b:number):number =>{
-      return a - b;
-    }
+    },[state.sort])
 
   useEffect(()=>{
     localStorage.setItem('todos', JSON.stringify(state.todos));
@@ -173,11 +160,11 @@ const AppProvider:React.FC<providerProps>
 
   useEffect(()=>{
     filterTodos()
-  }, [state.todos, state.select])
+  }, [filterTodos])
 
   useEffect(()=>{
     sortTodos()
-  }, [state.sort])
+  }, [sortTodos])
 
     return (
       <AppContext.Provider
