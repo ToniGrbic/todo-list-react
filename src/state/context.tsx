@@ -107,9 +107,9 @@ const AppProvider:React.FC<providerProps>
       if(state.sort === 'Date Ascending' || state.sort === 'Date Descending')
          dispatch({type:actionType.SET_SORT_SELECT, payload:'Newest'})
       if(state.sort === 'Oldest')
-        dispatch({type:actionType.ADD_TODO_END, payload:newTodo})
+         dispatch({type:actionType.ADD_TODO_END, payload:newTodo})
       else if(state.sort === 'Newest')
-        dispatch({type:actionType.ADD_TODO_BEGINING, payload:newTodo})
+         dispatch({type:actionType.ADD_TODO_BEGINING, payload:newTodo})
       dispatch({type:actionType.SET_TODO_TEXT, payload:''})
       showAlert(true, 'success', 'todo added!')
     }

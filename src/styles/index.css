@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('./Poppins-Regular.woff2')
+}
+
 :root{
   --orange-btn: rgb(243, 162, 11);
   --orange-btn-hover: rgb(255, 117, 4);
@@ -78,7 +83,7 @@ select{
 
 .datetimeDiv{
   background:white;
-  width:54%;
+  width:55%;
   margin-top:5px;
   margin-bottom:5px;
   padding:5px;
@@ -112,6 +117,7 @@ select,button :hover{
   width: 100px;
   height:41px;
   transition: 500ms;
+  border-top-right-radius: 10px;
 }
 
 #submit:hover{
