@@ -3,7 +3,7 @@ import { useGlobalContext } from '../state/context'
 import { TodoAppContext } from '../types/todos'
 
 
-const Form:React.FC = ():ReactElement => {
+const Form = ():ReactElement => {
     const { todoText, editFlag, sort, handleSubmit, handleTodoText, 
             handleDateTime, handleShowSelect, handleSortSelect } = useGlobalContext() as TodoAppContext
      

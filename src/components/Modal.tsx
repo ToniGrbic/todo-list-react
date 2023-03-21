@@ -2,7 +2,7 @@ import React , {ReactElement}from 'react'
 import  { ModalProps, TodoAppContext } from '../types/todos'
 import { useGlobalContext } from '../state/context'
 
-const Modal:React.FC<ModalProps> = 
+const Modal = 
   ({description, setShowModal}:ModalProps)
   :ReactElement => {
   

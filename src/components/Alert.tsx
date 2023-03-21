@@ -2,7 +2,7 @@ import React, { useEffect, ReactElement } from 'react'
 import { useGlobalContext } from '../state/context';
 import { TodoAppContext } from '../types/todos';
 
-const Alert:React.FC = ():ReactElement => {
+const Alert = ():ReactElement => {
   const { alert, todos, showAlert} = useGlobalContext() as TodoAppContext
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import { List, Alert, Form, Modal } from './components'
 import { useGlobalContext } from './state/context'
 import autoAnimate from '@formkit/auto-animate'
 import { TodoAppContext } from './types/todos'
+import data from "./state/todos.json"
 
 const App:React.FC = ():ReactElement=> {
 
@@ -12,6 +13,7 @@ const App:React.FC = ():ReactElement=> {
 
   useLayoutEffect(()=>{
     todoParentDiv.current && autoAnimate(todoParentDiv.current)
+    console.log(data.todos)
   },[todoParentDiv])
   
   return (

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import Todo  from './Todo'
 import { useGlobalContext } from '../state/context'
 import { TodoAppContext } from '../types/todos'
-const List:React.FC = ():ReactElement => {
+const List = ():ReactElement => {
   const { filteredTodos } = useGlobalContext() as TodoAppContext
   
   return (

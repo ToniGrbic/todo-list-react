@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export enum actionType{
+export enum actions{
     SHOW_ALERT,
     SET_EDIT_ID,
     SET_EDIT_FLAG,
@@ -54,7 +54,7 @@ export interface ITodo {
 }
 
 export interface IAction {
-    type:actionType,
+    type:actions,
     payload?:any
 }
 
