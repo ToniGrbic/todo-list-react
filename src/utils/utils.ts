@@ -1,11 +1,12 @@
 import { ITodo, DateTime } from '../types/todos'
+import data from "../state/todos.json"
 
 export const getLocalStorage = ():ITodo[] => {
     let todos = localStorage.getItem('todos');
     if (todos) {
       return (todos = JSON.parse(localStorage.getItem('todos') as string));
     } else {
-      return [];
+      return data.todos;
     }
 }
 
