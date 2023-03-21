@@ -83,7 +83,7 @@ select{
 
 .datetimeDiv{
   background:white;
-  width:55%;
+  width:220px;
   margin-top:5px;
   margin-bottom:5px;
   padding:5px;
@@ -181,7 +181,7 @@ select,button :hover{
 }
 
 .todoText{
-  word-wrap: break-word;
+  //word-wrap: break-word;
   text-align: center;
   max-width:330px;
   line-height:18px;
