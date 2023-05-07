@@ -1,20 +1,16 @@
-import React, { useLayoutEffect, useRef, ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { useGlobalContext } from '../state/context'
 import { TodoAppContext } from '../types/todos'
 import FormSelect from './FormSelect'
+import TextInput from './TextInput'
 const showArr = ["All", "Completed", "Uncompleted"]
 const sortArr = ["Newest", "Oldest", "Date Ascending", "Date Decending"];
 
 const Form = ():ReactElement => {
-    const inputRef = useRef<HTMLInputElement>(null)
-    const { todoText, editFlag, dateTime, handleSubmit, handleTodoText, 
-            handleDateTime, handleShowSelect, handleSortSelect } = useGlobalContext() as TodoAppContext
     
-    useLayoutEffect(()=>{
-        if(inputRef.current)
-           inputRef.current.focus()      
-    },[editFlag])
-
+    const {  dateTime, handleSubmit, handleDateTime, 
+             handleShowSelect, handleSortSelect } = useGlobalContext() as TodoAppContext
+    
     return (
         <form id="Form" onSubmit={handleSubmit}>
           <div className="datetimeDiv">
@@ -26,18 +22,7 @@ const Form = ():ReactElement => {
               onChange={(e) => handleDateTime(e.target.value)}
             />
           </div>
-          <div className="submitDiv">
-            <input
-              type="text"
-              id="text-input"
-              value={todoText}
-              ref={inputRef}
-              onChange={(e) => handleTodoText(e.target.value)}
-            />
-            <button type="submit" id="submit" value="Submit">
-              <h3>{editFlag ? "Edit" : "Submit"}</h3>
-            </button>
-          </div>
+          <TextInput/>
           <FormSelect handleSelect={handleShowSelect} options={showArr} type="Show"/>
           <FormSelect handleSelect={handleSortSelect} options={sortArr} type="Sort By"/>
         </form>
