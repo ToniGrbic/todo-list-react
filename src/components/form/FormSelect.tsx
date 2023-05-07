@@ -1,5 +1,5 @@
 import React from "react";
-import { FormSelectProps } from "../types/todos";
+import { FormSelectProps } from "../../types/todos";
 
 const FormSelect = ({ handleSelect, options, type }: FormSelectProps) => {
   return (

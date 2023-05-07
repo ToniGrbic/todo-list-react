@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useGlobalContext } from "../state/context";
-import { TodoAppContext, TodoProps } from "../types/todos";
+import { useGlobalContext } from "../../state/context";
+import { TodoAppContext, TodoProps } from "../../types/todos";
 import TodoButtons from "./TodoButtons";
 
 const Todo = ({ todo, index }: TodoProps): ReactElement => {
@@ -25,7 +25,7 @@ const Todo = ({ todo, index }: TodoProps): ReactElement => {
         )}
         <h4>{text}</h4>
       </div>
-      <TodoButtons id={id}/>
+      <TodoButtons id={id} />
     </div>
   );
 };
