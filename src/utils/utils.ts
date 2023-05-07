@@ -10,7 +10,7 @@ export const getLocalStorage = ():ITodo[] => {
     }
 }
 
-const valueOfDate= (date:string, time:string):number =>{
+const valueOfDate= (date:string, time:string) =>{
   return new Date(`${date}T${time}Z`).valueOf()
 }
 

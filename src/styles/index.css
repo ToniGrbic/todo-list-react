@@ -1,51 +1,59 @@
 @font-face {
-  font-family: 'Poppins';
-  src: url('./Poppins-Regular.woff2')
+  font-family: "Poppins";
+  src: url("./Poppins-Regular.woff2");
 }
 
-:root{
+:root {
   --orange-btn: rgb(243, 162, 11);
   --orange-btn-hover: rgb(255, 117, 4);
   --success-bg-color: #d4edda;
   --success-color: #155724;
   --danger-bg-color: #721c24;
   --danger-color: #f8d7da;
-  --grey-color: #E1E1E1;
-  --light-grey-color:#EEEEEE;
-  --blue-color:rgba(93,128,187,1)
+  --grey-color: #e1e1e1;
+  --light-grey-color: #eeeeee;
+  --blue-color: rgba(93, 128, 187, 1);
 }
 
-*{
-  font-family: 'Poppins';
+* {
+  font-family: "Poppins";
+}
+div {
+  //outline: 1px red solid;
 }
 
-body{
-  background: linear-gradient(0deg, rgba(93,128,187,1) 0%, rgba(25,42,123,1) 88%, rgba(11,25,102,1) 100%);
+body {
+  background: linear-gradient(
+    0deg,
+    rgba(93, 128, 187, 1) 0%,
+    rgba(25, 42, 123, 1) 88%,
+    rgba(11, 25, 102, 1) 100%
+  );
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height:100vh;
-  width:100%;
+  height: 100vh;
+  width: 100%;
 }
 
-.container{
-  padding-bottom:20px;
+.container {
+  padding-bottom: 20px;
   width: 30%;
   margin: 0% auto;
-  min-width:500px;
+  min-width: 500px;
 }
 
-h1{
-  color:white;
+h1 {
+  color: white;
   text-align: center;
 }
 
-h4{
-  margin:2px;
-  padding:5px;
+h4 {
+  margin: 2px;
+  padding: 5px;
 }
 
-.alertDiv{
-  width:100%;
+.alertDiv {
+  width: 100%;
   margin-bottom: 1rem;
   height: auto;
   display: grid;
@@ -66,216 +74,217 @@ h4{
   background: var(--success-bg-color);
 }
 
-input[type ='text']{
+input[type="text"] {
   width: 100%;
   margin: 0;
   height: 35px;
   border-color: white;
 }
 
-select{
+select {
   height: 35px;
   color: black;
-  font-weight:bold;
+  font-weight: bold;
   transition: 500ms;
-  width:95px;
+  width: 95px;
 }
 
-.datetimeDiv{
-  background:white;
-  width:220px;
-  margin-top:5px;
-  margin-bottom:5px;
-  padding:5px;
-  font-weight:bold;
-  border-radius:4px;
+.datetimeDiv {
+  background: white;
+  width: 220px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  font-weight: bold;
+  border-radius: 4px;
 }
 
-.selectDiv{
-  display:inline-block;
-  background:white;
-  width:160px;
-  margin-top:5px;
-  margin-bottom:5px;
-  margin-right:5px;
-  padding:5px;
-  font-weight:bold;
-  border-radius:4px;
+.selectDiv {
+  display: inline-block;
+  background: white;
+  width: 160px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  padding: 5px;
+  font-weight: bold;
+  border-radius: 4px;
 }
 
-select,button :hover{
-  cursor:pointer;
+select,
+button :hover {
+  cursor: pointer;
 }
 
-.submitDiv{
-  display:flex;
+.submitDiv {
+  display: flex;
 }
 
-#submit{
+#submit {
   background-color: var(--orange-btn);
   border: none;
   width: 100px;
-  height:41px;
+  height: 41px;
   transition: 500ms;
   border-top-right-radius: 10px;
 }
 
-#submit:hover{
+#submit:hover {
   background-color: var(--orange-btn-hover);
 }
 
-#submit h3{
-  transition:500ms;
+#submit h3 {
+  transition: 500ms;
 }
 
-#submit:hover h3{
+#submit:hover h3 {
   transform: translate(0px, -5px);
 }
 
-.todoButtonsContainer{
-  height:auto;
-  width:90px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+.todoButtonsContainer {
+  height: auto;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 }
 
-.todoButtonsContainer > button{
-  height:25px;
-  margin-right:3px;
-  margin-left:3px;
+.todoButtonsContainer > button {
+  height: 25px;
+  margin-right: 3px;
+  margin-left: 3px;
 }
 
-.bsChev{
-  border-radius:50%;
-  border:none;
-  background-color:var(--light-grey-color);
-  margin:5px;
+.bsChev {
+  border-radius: 50%;
+  border: none;
+  background-color: var(--light-grey-color);
+  margin: 5px;
   transition: 400ms;
 }
 
-.bsChev:hover{
-  background-color:var(--grey-color);
+.bsChev:hover {
+  background-color: var(--grey-color);
 }
 
-.todoCompleted{
-  background: var(--success-bg-color) !important; 
+.todoCompleted {
+  background: var(--success-bg-color) !important;
   text-decoration: line-through;
   transition: 500ms;
-}  
+}
 
-.todoDiv{
+.todoDiv {
   background-color: white;
   width: 96%;
   border-radius: 5px;
   padding: 10px;
-  margin-top: 10px; 
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
   white-space: normal;
 }
 
-.dateTime{
-  color:var(--blue-color)
+.dateTime {
+  color: var(--blue-color);
 }
 
-.todoText{
-  //word-wrap: break-word;
+.todoText {
   text-align: center;
-  max-width:330px;
-  line-height:18px;
+  max-width: 330px;
+  line-height: 18px;
 }
 
-.indexNumber{
-  background-color:var(--grey-color);
-  text-align:center;
-  border-radius:50%;
-  font-weight:bold;
-  margin-bottom:5px;
+.indexNumber {
+  background-color: var(--grey-color);
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .show-container {
-  visibility: visible !important; 
+  visibility: visible !important;
 }
 
 .clearBtn {
   width: 100%;
   text-align: center;
-  cursor:pointer;
+  cursor: pointer;
   background-color: var(--orange-btn);
-  border:none;
+  border: none;
   margin-top: 10px;
   font-size: 1.1rem;
   border-radius: 0.3rem;
   color: black;
   padding: 0.5rem;
-  transition:500ms;
+  transition: 500ms;
 }
 
-.clearBtn:hover{
- background-color: var(--orange-btn-hover);
+.clearBtn:hover {
+  background-color: var(--orange-btn-hover);
 }
 
 .modal {
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0,0.8);
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .modal-content {
-	margin: 15% auto;
-	border-radius: 10px;
-	width: 30%;
-	color: black;
-  background-color:white;
-	padding: 20px;
-	text-align: center;
-	font-size: 1.1rem;
-	border: 5px solid #262626;
+  margin: 15% auto;
+  max-width:20rem;
+  border-radius: 10px;
+  width: 30%;
+  color: black;
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+  border: 5px solid #262626;
 }
 
-.modalBtn{
-  width:100px;
-  height:40px;
+.modalBtn {
+  width: 100px;
+  height: 40px;
   text-transform: Uppercase;
-  margin:5px;
-  letter-spacing:3px;
-  background-color:white;
-  border-radius:5px;
+  margin: 5px;
+  letter-spacing: 3px;
+  background-color: white;
+  border-radius: 5px;
 }
 
-.cancelBtn{
+.cancelBtn {
   border: 3px solid red;
-  color:red;
+  color: red;
 }
 
-.confirmBtn{
+.confirmBtn {
   border: 3px solid green;
-  color:green;
+  color: green;
 }
 
-@media screen and (max-width: 580px){
-  .container{
-    width:80%;
-    min-width:300px;
+@media screen and (max-width: 580px) {
+  .container {
+    width: 80%;
+    min-width: 300px;
     margin: 5% auto;
   }
-  .todoText{
-    max-width:180px;
+  .todoText {
+    max-width: 180px;
   }
-  .modal-content{
-    width:50%;
+  .modal-content {
+    width: 50%;
   }
 }
 
-@media screen and (max-width: 420px){
-  .todoText{
-    max-width:150px;
+@media screen and (max-width: 420px) {
+  .todoText {
+    max-width: 150px;
   }
 }

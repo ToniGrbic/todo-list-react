@@ -1,23 +1,29 @@
-import React, { useContext, useReducer, useEffect, useCallback } from 'react';
-import reducer from './reducer'
-import { TodoAppContext, ITodo, TodoAppState, actions, providerProps } from '../types/todos'
-import { getLocalStorage, sortByDate, sortByCreated } from '../utils/utils'
+import React, { useContext, useReducer, useEffect, useCallback, useMemo } from "react";
+import reducer from "./reducer";
+import {
+  TodoAppContext,
+  ITodo,
+  TodoAppState,
+  actions,
+  providerProps,
+} from "../types/todos";
+import { getLocalStorage, sortByDate, sortByCreated } from "../utils/utils";
 
-const uuid = require('react-uuid')
+const uuid = require("react-uuid");
 
-const defaultState:TodoAppState = {
-    todos: getLocalStorage(),
-    todoText: '',
-    dateTime:{date:'', time:''},
-    editID: null,
-    editFlag: false,
-    alert: { show:false, type:'', msg:''},
-    select: 'All',
-    sort: 'Newest',
-    filteredTodos:[],
-}
+const defaultState: TodoAppState = {
+  todos: getLocalStorage(),
+  todoText: "",
+  dateTime: { date: "", time: "" },
+  editID: null,
+  editFlag: false,
+  alert: { show: false, type: "", msg: "" },
+  select: "All",
+  sort: "Newest",
+  filteredTodos: [],
+};
 
-const AppContext = React.createContext<TodoAppContext | null>(null)
+const AppContext = React.createContext<TodoAppContext | null>(null);
 
 const AppProvider = ({ children }: providerProps) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
@@ -43,7 +49,7 @@ const AppProvider = ({ children }: providerProps) => {
   const checkTodo = (id: string) => {
     dispatch({ type: actions.CHECK_TODO, payload: id });
 
-    const currentTodo = state.todos.find((todo: ITodo) => todo.id === id);
+    const currentTodo = state.todos.find((todo) => todo.id === id);
     if (currentTodo?.completed) {
       showAlert(true, "danger", "todo uncompleted!");
     } else {
@@ -54,8 +60,12 @@ const AppProvider = ({ children }: providerProps) => {
   const editTodo = (id: string) => {
     dispatch({ type: actions.SET_EDIT_FLAG, payload: true });
     dispatch({ type: actions.SET_EDIT_ID, payload: id });
-    const currentTodo = state.todos.find((todo: ITodo) => todo.id === id);
+
+    const currentTodo = state.todos.find((todo) => todo.id === id);
     dispatch({ type: actions.SET_TODO_TEXT, payload: currentTodo?.text });
+
+    const { date, time } = currentTodo!.dateTime 
+    dispatch({ type: actions.SET_DATE_TIME, payload: { date, time } });
   };
 
   const handleDateTime = (value: string) => {
@@ -95,7 +105,6 @@ const AppProvider = ({ children }: providerProps) => {
     } else if (state.todoText && state.editFlag) {
       dispatch({ type: actions.EDIT_TODO });
       dispatch({ type: actions.SET_EDIT_FLAG, payload: false });
-      dispatch({ type: actions.SET_TODO_TEXT, payload: "" });
       showAlert(true, "success", "todo edited!");
     } else {
       const newTodo = {
@@ -105,15 +114,19 @@ const AppProvider = ({ children }: providerProps) => {
         dateTime: state.dateTime,
         completed: false,
       } as ITodo;
+
       if (state.sort === "Date Ascending" || state.sort === "Date Descending")
         dispatch({ type: actions.SET_SORT_SELECT, payload: "Newest" });
+        
       if (state.sort === "Oldest")
         dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
       else if (state.sort === "Newest")
         dispatch({ type: actions.ADD_TODO_BEGINING, payload: newTodo });
-      dispatch({ type: actions.SET_TODO_TEXT, payload: "" });
+
       showAlert(true, "success", "todo added!");
     }
+    dispatch({ type: actions.SET_TODO_TEXT, payload: "" });
+    dispatch({ type: actions.SET_DATE_TIME, payload: { date:"", time:"" } });
   };
 
   const filterTodos = useCallback((): void => {
@@ -121,10 +134,10 @@ const AppProvider = ({ children }: providerProps) => {
 
     switch (state.select) {
       case "Completed":
-        filteredTodos = state.todos.filter((todo: ITodo) => todo.completed);
+        filteredTodos = state.todos.filter((todo) => todo.completed);
         break;
       case "Uncompleted":
-        filteredTodos = state.todos.filter((todo: ITodo) => !todo.completed);
+        filteredTodos = state.todos.filter((todo) => !todo.completed);
         break;
       default:
         filteredTodos = state.todos;
@@ -133,16 +146,21 @@ const AppProvider = ({ children }: providerProps) => {
     dispatch({ type: actions.SET_FILTERED_TODOS, payload: filteredTodos });
   }, [state.todos, state.select]);
 
+
   const sortTodos = useCallback((): void => {
     let sortedTodos;
     const todos = [...state.todos];
 
     switch (state.sort) {
       case "Date Ascending":
-        sortedTodos = todos.sort((a, b) => sortByDate(a.dateTime, b.dateTime));
+        sortedTodos = todos.sort((a, b) => 
+           sortByDate(a.dateTime, b.dateTime), 
+        );
         break;
       case "Date Descending":
-        sortedTodos = todos.sort((a, b) => sortByDate(b.dateTime, a.dateTime));
+        sortedTodos = todos.sort((a, b) =>
+           sortByDate(b.dateTime, a.dateTime),   
+        );
         break;
       case "Oldest":
         sortedTodos = todos.sort((a, b) =>
@@ -192,8 +210,8 @@ const AppProvider = ({ children }: providerProps) => {
   );
 };
 
-  export const useGlobalContext = () => {
-    return useContext(AppContext);
-  };
-  
-  export { AppContext, AppProvider };
+export const useGlobalContext = () => {
+  return useContext(AppContext);
+};
+
+export { AppContext, AppProvider };

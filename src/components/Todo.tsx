@@ -1,17 +1,12 @@
 import React, { ReactElement } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { BsChevronUp, BsChevronDown } from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
 import { useGlobalContext } from "../state/context";
-import { FaCheckSquare } from "react-icons/fa";
 import { TodoAppContext, TodoProps } from "../types/todos";
+import TodoButtons from "./TodoButtons";
 
-const Todo = ({
-  todo,
-  index,
-}: TodoProps): ReactElement => {
+const Todo = ({ todo, index }: TodoProps): ReactElement => {
   const { completed, text, id, dateTime } = todo;
-  const { editTodo, checkTodo, deleteTodo, moveTodo } =
-    useGlobalContext() as TodoAppContext;
+  const { editTodo } = useGlobalContext() as TodoAppContext;
 
   return (
     <div className={`todoDiv ${completed ? "todoCompleted" : null}`}>
@@ -30,21 +25,7 @@ const Todo = ({
         )}
         <h4>{text}</h4>
       </div>
-
-      <div className="todoButtonsContainer">
-        <button onClick={() => checkTodo(id)}>
-          <FaCheckSquare />
-        </button>
-        <button onClick={() => deleteTodo(id)}>
-          <FaTrash />
-        </button>
-        <button className="bsChev" onClick={() => moveTodo(id, "Up")}>
-          <BsChevronUp />
-        </button>
-        <button className="bsChev" onClick={() => moveTodo(id, "Down")}>
-          <BsChevronDown />
-        </button>
-      </div>
+      <TodoButtons id={id}/>
     </div>
   );
 };

@@ -73,6 +73,12 @@ export type TodoProps = {
     index:number
 }
 
+export type FormSelectProps = {
+  handleSelect: (value: string) => void;
+  options: string[];
+  type: string;
+};
+
 export type providerProps = { 
     children: ReactNode 
 }

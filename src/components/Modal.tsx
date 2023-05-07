@@ -3,8 +3,7 @@ import  { ModalProps, TodoAppContext } from '../types/todos'
 import { useGlobalContext } from '../state/context'
 
 const Modal = 
-  ({description, setShowModal}:ModalProps)
-  :ReactElement => {
+({description, setShowModal}:ModalProps):ReactElement => {
   
   const { deleteTodos } = useGlobalContext() as TodoAppContext
   

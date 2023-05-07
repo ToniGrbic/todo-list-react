@@ -8,7 +8,8 @@ const Alert = ():ReactElement => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       showAlert(false, '', '');
-    }, 1100);
+    }, 2000);
+    
     return () => clearTimeout(timeout);
   }, [todos, showAlert]);
   
