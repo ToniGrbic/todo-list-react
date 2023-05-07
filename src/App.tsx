@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState, ReactElement } from 'react'
-import { List, Alert, Form, Modal } from './components'
+import { List, Alert, Form, Modal, ClearButton } from './components'
 import { useGlobalContext } from './state/context'
 import autoAnimate from '@formkit/auto-animate'
 import { TodoAppContext } from './types/todos'
@@ -20,20 +20,16 @@ const App = ():ReactElement=> {
     <div style={{height:"3.5rem"}}>
       { alert.show && <Alert/>}
     </div>
+
     {showModal && 
-    <Modal description={`Are you sure to delete ${select}?`}
-           setShowModal={setShowModal}/>
+      <Modal select={select} setShowModal={setShowModal}/>
     }
     <Form />
-    <div className="listDiv" 
-         ref={todoParentDiv}>
+
+    <div className="listDiv" ref={todoParentDiv}>
      {filteredTodos.length > 0 && 
       (<>
-        <button 
-          className='clearBtn' 
-          onClick={()=>setShowModal(true)}>
-          Delete {select}
-        </button>
+        <ClearButton select={select} setShowModal={setShowModal}/>
         <List/>
       </>
       )}  

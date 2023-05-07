@@ -3,7 +3,7 @@ import  { ModalProps, TodoAppContext } from '../types/todos'
 import { useGlobalContext } from '../state/context'
 
 const Modal = 
-({description, setShowModal}:ModalProps):ReactElement => {
+({select, setShowModal}:ModalProps):ReactElement => {
   
   const { deleteTodos } = useGlobalContext() as TodoAppContext
   
@@ -14,7 +14,7 @@ const Modal =
   return (
     <div className='modal'>
         <div className='modal-content'>
-            <h3>{description}</h3>
+            <h3>Are you sure to delete {select}?</h3>
             <button className="modalBtn confirmBtn"
                     onClick={()=>handleConfirmClick()}>
                     Confirm
