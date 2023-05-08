@@ -1,4 +1,10 @@
-import React, { useContext, useReducer, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useContext,
+  useReducer,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import reducer from "./reducer";
 import {
   TodoAppContext,
@@ -64,7 +70,7 @@ const AppProvider = ({ children }: providerProps) => {
     const currentTodo = state.todos.find((todo) => todo.id === id);
     dispatch({ type: actions.SET_TODO_TEXT, payload: currentTodo?.text });
 
-    const { date, time } = currentTodo!.dateTime 
+    const { date, time } = currentTodo!.dateTime;
     dispatch({ type: actions.SET_DATE_TIME, payload: { date, time } });
   };
 
@@ -117,7 +123,7 @@ const AppProvider = ({ children }: providerProps) => {
 
       if (state.sort === "Date Ascending" || state.sort === "Date Descending")
         dispatch({ type: actions.SET_SORT_SELECT, payload: "Newest" });
-        
+
       if (state.sort === "Oldest")
         dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
       else if (state.sort === "Newest")
@@ -126,7 +132,7 @@ const AppProvider = ({ children }: providerProps) => {
       showAlert(true, "success", "todo added!");
     }
     dispatch({ type: actions.SET_TODO_TEXT, payload: "" });
-    dispatch({ type: actions.SET_DATE_TIME, payload: { date:"", time:"" } });
+    dispatch({ type: actions.SET_DATE_TIME, payload: { date: "", time: "" } });
   };
 
   const filterTodos = useCallback((): void => {
@@ -146,21 +152,16 @@ const AppProvider = ({ children }: providerProps) => {
     dispatch({ type: actions.SET_FILTERED_TODOS, payload: filteredTodos });
   }, [state.todos, state.select]);
 
-
   const sortTodos = useCallback((): void => {
     let sortedTodos;
     const todos = [...state.todos];
 
     switch (state.sort) {
       case "Date Ascending":
-        sortedTodos = todos.sort((a, b) => 
-           sortByDate(a.dateTime, b.dateTime), 
-        );
+        sortedTodos = todos.sort((a, b) => sortByDate(a.dateTime, b.dateTime));
         break;
       case "Date Descending":
-        sortedTodos = todos.sort((a, b) =>
-           sortByDate(b.dateTime, a.dateTime),   
-        );
+        sortedTodos = todos.sort((a, b) => sortByDate(b.dateTime, a.dateTime));
         break;
       case "Oldest":
         sortedTodos = todos.sort((a, b) =>
