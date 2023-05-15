@@ -118,10 +118,8 @@ const AppProvider = ({ children }: providerProps) => {
       showAlert(true, "danger", "input empty, cant sumbit!");
     } else if (state.todoText && state.editFlag) {
       dispatch({ type: actions.EDIT_TODO });
-      dispatch({
-        type: actions.SET_STATE,
-        payload: { key: "editFlag", value: false },
-      });
+      dispatch({ type: actions.SET_STATE,
+                 payload: { key: "editFlag", value: false }});
       showAlert(true, "success", "todo edited!");
     } else {
       const newTodo = {
@@ -134,7 +132,7 @@ const AppProvider = ({ children }: providerProps) => {
       addTodo(newTodo)
     }
 
-    dispatch({ type: actions.SET_STATE,
+    dispatch({ type: actions.SET_STATE, 
                payload: { key: "todoText", value: "" } });
     dispatch({ type: actions.SET_STATE,
                payload: { key: "dateTime", value: { date: "", time: "" } }});
@@ -142,9 +140,7 @@ const AppProvider = ({ children }: providerProps) => {
 
   const addTodo = (newTodo:ITodo) =>{
     if (state.sort === "Date Ascending" || state.sort === "Date Descending")
-      dispatch({ type: actions.SET_STATE,
-                 payload: { key: "sort", value: "Newest" },
-      });
+      dispatch({ type: actions.SET_STATE, payload: { key: "sort", value: "Newest" }});
 
     if (state.sort === "Oldest")
       dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
