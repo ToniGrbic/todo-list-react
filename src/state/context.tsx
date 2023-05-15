@@ -131,29 +131,28 @@ const AppProvider = ({ children }: providerProps) => {
         dateTime: state.dateTime,
         completed: false,
       } as ITodo;
-
-      if (state.sort === "Date Ascending" || state.sort === "Date Descending")
-        dispatch({
-          type: actions.SET_STATE,
-          payload: { key: "sort", value: "Newest" },
-        });
-
-      if (state.sort === "Oldest")
-        dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
-      else if (state.sort === "Newest")
-        dispatch({ type: actions.ADD_TODO_BEGINING, payload: newTodo });
-
-      showAlert(true, "success", "todo added!");
+      addTodo(newTodo)
     }
-    dispatch({
-      type: actions.SET_STATE,
-      payload: { key: "todoText", value: "" },
-    });
-    dispatch({
-      type: actions.SET_STATE,
-      payload: { key: "dateTime", value: { date: "", time: "" } },
-    });
+
+    dispatch({ type: actions.SET_STATE,
+               payload: { key: "todoText", value: "" } });
+    dispatch({ type: actions.SET_STATE,
+               payload: { key: "dateTime", value: { date: "", time: "" } }});
   };
+
+  const addTodo = (newTodo:ITodo) =>{
+    if (state.sort === "Date Ascending" || state.sort === "Date Descending")
+      dispatch({ type: actions.SET_STATE,
+                 payload: { key: "sort", value: "Newest" },
+      });
+
+    if (state.sort === "Oldest")
+      dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
+    else if (state.sort === "Newest")
+      dispatch({ type: actions.ADD_TODO_BEGINING, payload: newTodo });
+
+    showAlert(true, "success", "todo added!");
+  }
 
   const filterTodos = useCallback((): void => {
     let filteredTodos;
@@ -175,7 +174,7 @@ const AppProvider = ({ children }: providerProps) => {
     });
   }, [state.todos, state.select]);
 
-  
+
   const sortTodos = useCallback((): void => {
     let sortedTodos;
     const todos = [...state.todos];
