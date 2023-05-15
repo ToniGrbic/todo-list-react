@@ -5,32 +5,8 @@ const reducer = (state: TodoAppState, action: IAction): TodoAppState => {
   const { payload, type } = action;
 
   switch (type) {
-    case act.SHOW_ALERT:
-      state = { ...state, alert: payload };
-      break;
-    case act.SET_EDIT_ID:
-      state = { ...state, editID: payload };
-      break;
-    case act.SET_EDIT_FLAG:
-      state = { ...state, editFlag: payload };
-      break;
-    case act.SET_FILTERED_TODOS:
-      state = { ...state, filteredTodos: payload };
-      break;
-    case act.SET_TODOS:
-      state = { ...state, todos: payload };
-      break;
-    case act.SET_SHOW_SELECT:
-      state = { ...state, select: payload };
-      break;
-    case act.SET_SORT_SELECT:
-      state = { ...state, sort: payload };
-      break;
-    case act.SET_TODO_TEXT:
-      state = { ...state, todoText: payload };
-      break;
-    case act.SET_DATE_TIME:
-      state = { ...state, dateTime: payload };
+    case act.SET_STATE:
+      state = {...state, [payload.key]: payload.value}
       break;
     case act.DELETE_TODOS:
       if (state.select === "All") newTodos = [];

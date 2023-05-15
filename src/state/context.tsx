@@ -1,20 +1,7 @@
-import React, {
-  useContext,
-  useReducer,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
-import reducer from "./reducer";
-import {
-  TodoAppContext,
-  ITodo,
-  TodoAppState,
-  actions,
-  providerProps,
-} from "../types/todos";
+import React, {useContext, useReducer, useEffect, useCallback} from "react";
+import { TodoAppContext, ITodo, TodoAppState, actions, providerProps,} from "../types/todos";
 import { getLocalStorage, sortByDate, sortByCreated } from "../utils/utils";
-
+import reducer from "./reducer";
 const uuid = require("react-uuid");
 
 const defaultState: TodoAppState = {
@@ -39,7 +26,10 @@ const AppProvider = ({ children }: providerProps) => {
     type: string = "",
     msg: string = ""
   ) => {
-    dispatch({ type: actions.SHOW_ALERT, payload: { show, type, msg } });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "alert", value: { show, type, msg } },
+    });
   };
 
   const deleteTodos = () => {
@@ -64,36 +54,54 @@ const AppProvider = ({ children }: providerProps) => {
   };
 
   const editTodo = (id: string) => {
-    dispatch({ type: actions.SET_EDIT_FLAG, payload: true });
-    dispatch({ type: actions.SET_EDIT_ID, payload: id });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "editFlag", value: true },
+    });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "editID", value: id },
+    });
 
     const currentTodo = state.todos.find((todo) => todo.id === id);
-    dispatch({ type: actions.SET_TODO_TEXT, payload: currentTodo?.text });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "todoText", value: currentTodo?.text },
+    });
 
     const { date, time } = currentTodo!.dateTime;
-    dispatch({ type: actions.SET_DATE_TIME, payload: { date, time } });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "dateTime", value: { date, time } },
+    });
   };
 
   const handleDateTime = (value: string) => {
     const dateAndTime = value.split("T");
     const [date, time] = dateAndTime;
-    dispatch({ type: actions.SET_DATE_TIME, payload: { date, time } });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "dateTime", value: { date, time } },
+    });
   };
 
   const handleTodoText = (value: string) => {
     if (value.length < 50)
-      dispatch({ type: actions.SET_TODO_TEXT, payload: value });
+      dispatch({
+        type: actions.SET_STATE,
+        payload: { key: "todoText", value },
+      });
     else {
       showAlert(true, "danger", "max number of charachters reached");
     }
   };
 
   const handleShowSelect = (value: string) => {
-    dispatch({ type: actions.SET_SHOW_SELECT, payload: value });
+    dispatch({ type: actions.SET_STATE, payload: { key: "select", value } });
   };
 
   const handleSortSelect = (value: string) => {
-    dispatch({ type: actions.SET_SORT_SELECT, payload: value });
+    dispatch({ type: actions.SET_STATE, payload: { key: "sort", value } });
   };
 
   const moveTodo = (id: string, type: string) => {
@@ -110,7 +118,10 @@ const AppProvider = ({ children }: providerProps) => {
       showAlert(true, "danger", "input empty, cant sumbit!");
     } else if (state.todoText && state.editFlag) {
       dispatch({ type: actions.EDIT_TODO });
-      dispatch({ type: actions.SET_EDIT_FLAG, payload: false });
+      dispatch({
+        type: actions.SET_STATE,
+        payload: { key: "editFlag", value: false },
+      });
       showAlert(true, "success", "todo edited!");
     } else {
       const newTodo = {
@@ -122,7 +133,10 @@ const AppProvider = ({ children }: providerProps) => {
       } as ITodo;
 
       if (state.sort === "Date Ascending" || state.sort === "Date Descending")
-        dispatch({ type: actions.SET_SORT_SELECT, payload: "Newest" });
+        dispatch({
+          type: actions.SET_STATE,
+          payload: { key: "sort", value: "Newest" },
+        });
 
       if (state.sort === "Oldest")
         dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
@@ -131,8 +145,14 @@ const AppProvider = ({ children }: providerProps) => {
 
       showAlert(true, "success", "todo added!");
     }
-    dispatch({ type: actions.SET_TODO_TEXT, payload: "" });
-    dispatch({ type: actions.SET_DATE_TIME, payload: { date: "", time: "" } });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "todoText", value: "" },
+    });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "dateTime", value: { date: "", time: "" } },
+    });
   };
 
   const filterTodos = useCallback((): void => {
@@ -149,9 +169,13 @@ const AppProvider = ({ children }: providerProps) => {
         filteredTodos = state.todos;
         break;
     }
-    dispatch({ type: actions.SET_FILTERED_TODOS, payload: filteredTodos });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "filteredTodos", value: filteredTodos },
+    });
   }, [state.todos, state.select]);
 
+  
   const sortTodos = useCallback((): void => {
     let sortedTodos;
     const todos = [...state.todos];
@@ -174,7 +198,10 @@ const AppProvider = ({ children }: providerProps) => {
         );
         break;
     }
-    dispatch({ type: actions.SET_TODOS, payload: sortedTodos });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "todos", value: sortedTodos },
+    });
   }, [state.sort]);
 
   useEffect(() => {

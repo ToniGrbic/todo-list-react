@@ -1,15 +1,7 @@
 import { ReactNode } from "react";
 
 export enum actions {
-  SHOW_ALERT,
-  SET_EDIT_ID,
-  SET_EDIT_FLAG,
-  SET_FILTERED_TODOS,
-  SET_TODOS,
-  SET_SHOW_SELECT,
-  SET_SORT_SELECT,
-  SET_TODO_TEXT,
-  SET_DATE_TIME,
+  SET_STATE,
   DELETE_TODOS,
   ADD_TODO_END,
   ADD_TODO_BEGINING,
