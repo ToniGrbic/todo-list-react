@@ -6,7 +6,7 @@ const reducer = (state: TodoAppState, action: IAction): TodoAppState => {
 
   switch (type) {
     case act.SET_STATE:
-      state = {...state, [payload.key]: payload.value}
+      state = { ...state, [payload.key]: payload.value };
       break;
     case act.DELETE_TODOS:
       if (state.select === "All") newTodos = [];
@@ -37,8 +37,8 @@ const reducer = (state: TodoAppState, action: IAction): TodoAppState => {
       break;
     case act.EDIT_TODO:
       newTodos = state.todos.map((todo: ITodo) => {
-        if (todo.id === state.editID) 
-          return { ...todo, text: state.todoText, dateTime: state.dateTime, };
+        if (todo.id === state.editID)
+          return { ...todo, text: state.todoText, dateTime: state.dateTime };
         return todo;
       });
       state = { ...state, todos: newTodos };
@@ -47,8 +47,8 @@ const reducer = (state: TodoAppState, action: IAction): TodoAppState => {
       const { id, delta } = payload;
       newTodos = [...state.todos];
 
-      const currentTodo = newTodos.find((todo) => todo.id === id);
-      const currentIndex = newTodos.indexOf(currentTodo as ITodo);
+      const currentTodo = newTodos.find((todo) => todo!.id === id);
+      const currentIndex = newTodos.indexOf(currentTodo!);
       newTodos.splice(currentIndex, 1);
 
       let newIndex = currentIndex + delta;
@@ -58,7 +58,7 @@ const reducer = (state: TodoAppState, action: IAction): TodoAppState => {
         newIndex = newTodos.length;
       }
 
-      newTodos.splice(newIndex, 0, currentTodo as ITodo);
+      newTodos.splice(newIndex, 0, currentTodo!);
       state = { ...state, todos: newTodos };
       break;
     default:

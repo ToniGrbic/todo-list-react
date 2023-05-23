@@ -3,8 +3,8 @@ import { useGlobalContext } from "../../state/context";
 import { TodoAppContext } from "../../types/todos";
 
 const TextInput = (): ReactElement => {
-  const { todoText, editFlag, handleTodoText } =
-    useGlobalContext() as TodoAppContext;
+  const { todoText, editFlag, handleTodoText } 
+      = useGlobalContext() as TodoAppContext;
   const inputRef = useRef<HTMLInputElement>(null);
 
   useLayoutEffect(() => {

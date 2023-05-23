@@ -1,9 +1,8 @@
 import React, { ReactElement } from "react";
 import { useGlobalContext } from "../../state/context";
 import { TodoAppContext } from "../../types/todos";
-import FormSelect from "./FormSelect";
-import TextInput from "./TextInput";
-import DateTimeInput from "./DateTimeInput";
+import { FormSelect, TextInput, DateTimeInput } from "../index";
+
 const showArr = ["All", "Completed", "Uncompleted"];
 const sortArr = ["Newest", "Oldest", "Date Ascending", "Date Decending"];
 

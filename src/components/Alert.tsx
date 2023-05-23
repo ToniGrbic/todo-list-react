@@ -8,12 +8,19 @@ const Alert = ():ReactElement => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       showAlert(false, '', '');
-    }, 2000);
+    }, 1500);
     
     return () => clearTimeout(timeout);
   }, [todos, showAlert]);
   
-  return <div className={`alertDiv alert-${alert.type}`}>{alert.msg}</div>;
+  return (
+  <div style={{ height: "3.5rem" }}>
+    { alert.show && 
+      <div className={`alertDiv alert-${alert.type}`}>
+        {alert.msg}
+      </div> }
+  </div>
+  );
 }
 
 export default Alert

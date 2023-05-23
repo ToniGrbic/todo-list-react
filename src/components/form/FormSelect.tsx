@@ -5,8 +5,8 @@ const FormSelect = ({ handleSelect, options, type }: FormSelectProps) => {
   return (
     <div className="selectDiv">
       <label htmlFor={type}>{type}: </label>
-
-      <select name={type} onChange={(e) => handleSelect(e.target.value)}>
+      <select name={type} 
+              onChange={(e) => handleSelect(e.target.value)}>
         {options?.map((option: string, index: number) => {
           return (
             <option key={index} value={option}>
@@ -18,5 +18,4 @@ const FormSelect = ({ handleSelect, options, type }: FormSelectProps) => {
     </div>
   );
 };
-
 export default FormSelect;

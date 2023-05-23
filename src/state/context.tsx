@@ -1,5 +1,11 @@
-import React, {useContext, useReducer, useEffect, useCallback} from "react";
-import { TodoAppContext, ITodo, TodoAppState, actions, providerProps,} from "../types/todos";
+import React, { useContext, useReducer, useEffect, useCallback } from "react";
+import {
+  TodoAppContext,
+  ITodo,
+  TodoAppState,
+  actions,
+  providerProps,
+} from "../types/todos";
 import { getLocalStorage, sortByDate, sortByCreated } from "../utils/utils";
 import reducer from "./reducer";
 const uuid = require("react-uuid");
@@ -118,29 +124,37 @@ const AppProvider = ({ children }: providerProps) => {
       showAlert(true, "danger", "input empty, cant sumbit!");
     } else if (state.todoText && state.editFlag) {
       dispatch({ type: actions.EDIT_TODO });
-      dispatch({ type: actions.SET_STATE,
-                 payload: { key: "editFlag", value: false }});
+      dispatch({
+        type: actions.SET_STATE,
+        payload: { key: "editFlag", value: false },
+      });
       showAlert(true, "success", "todo edited!");
     } else {
-      const newTodo = {
+      const newTodo: ITodo = {
         id: uuid(),
         createdAt: new Date().getTime(),
         text: state.todoText,
         dateTime: state.dateTime,
         completed: false,
-      } as ITodo;
-      addTodo(newTodo)
+      };
+      addTodo(newTodo);
     }
-
-    dispatch({ type: actions.SET_STATE, 
-               payload: { key: "todoText", value: "" } });
-    dispatch({ type: actions.SET_STATE,
-               payload: { key: "dateTime", value: { date: "", time: "" } }});
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "todoText", value: "" },
+    });
+    dispatch({
+      type: actions.SET_STATE,
+      payload: { key: "dateTime", value: { date: "", time: "" } },
+    });
   };
 
-  const addTodo = (newTodo:ITodo) =>{
+  const addTodo = (newTodo: ITodo) => {
     if (state.sort === "Date Ascending" || state.sort === "Date Descending")
-      dispatch({ type: actions.SET_STATE, payload: { key: "sort", value: "Newest" }});
+      dispatch({
+        type: actions.SET_STATE,
+        payload: { key: "sort", value: "Newest" },
+      });
 
     if (state.sort === "Oldest")
       dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
@@ -148,7 +162,7 @@ const AppProvider = ({ children }: providerProps) => {
       dispatch({ type: actions.ADD_TODO_BEGINING, payload: newTodo });
 
     showAlert(true, "success", "todo added!");
-  }
+  };
 
   const filterTodos = useCallback((): void => {
     let filteredTodos;
@@ -169,7 +183,6 @@ const AppProvider = ({ children }: providerProps) => {
       payload: { key: "filteredTodos", value: filteredTodos },
     });
   }, [state.todos, state.select]);
-
 
   const sortTodos = useCallback((): void => {
     let sortedTodos;
@@ -214,18 +227,11 @@ const AppProvider = ({ children }: providerProps) => {
   return (
     <AppContext.Provider
       value={{
-        ...state,
-        handleSubmit,
-        handleTodoText,
-        handleShowSelect,
-        handleSortSelect,
-        deleteTodos,
-        deleteTodo,
-        checkTodo,
-        handleDateTime,
-        showAlert,
-        editTodo,
-        moveTodo,
+        ...state, 
+        handleSubmit, handleTodoText, showAlert,
+        handleDateTime, deleteTodos, deleteTodo,
+        handleSortSelect, editTodo, checkTodo, 
+        handleShowSelect, moveTodo, 
       }}
     >
       {children}

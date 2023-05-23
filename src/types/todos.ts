@@ -37,7 +37,7 @@ export interface TodoAppContext extends TodoAppState {
   showAlert: (show: boolean, type: string, msg: string) => void;
 }
 
-export interface ITodo {
+export type ITodo = {
   readonly id: string;
   readonly createdAt: number;
   text: string;
