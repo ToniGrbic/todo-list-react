@@ -18,8 +18,7 @@ const defaultState: TodoAppState = {
   editFlag: false,
   alert: { show: false, type: "", msg: "" },
   select: "All",
-  sort: "Newest",
-  filteredTodos: [],
+  sort: "Newest"
 };
 
 const AppContext = React.createContext<TodoAppContext | null>(null);
@@ -27,14 +26,13 @@ const AppContext = React.createContext<TodoAppContext | null>(null);
 const AppProvider = ({ children }: providerProps) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
 
-  const showAlert = (
-    show: boolean = true,
-    type: string = "",
-    msg: string = ""
-  ) => {
+  const showAlert = (show: boolean, type: string, msg: string) => {
     dispatch({
       type: actions.SET_STATE,
-      payload: { key: "alert", value: { show, type, msg } },
+      payload: {
+        key: "alert",
+        value: { show, type, msg },
+      },
     });
   };
 
@@ -93,13 +91,9 @@ const AppProvider = ({ children }: providerProps) => {
 
   const handleTodoText = (value: string) => {
     if (value.length < 50)
-      dispatch({
-        type: actions.SET_STATE,
-        payload: { key: "todoText", value },
-      });
-    else {
+      dispatch({type: actions.SET_STATE,payload: { key: "todoText", value }});
+    else 
       showAlert(true, "danger", "max number of charachters reached");
-    }
   };
 
   const handleShowSelect = (value: string) => {
@@ -120,14 +114,11 @@ const AppProvider = ({ children }: providerProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!state.todoText) {
-      showAlert(true, "danger", "input empty, cant sumbit!");
+    if (!state.todoText || !state.dateTime.date) {
+      showAlert(true, "danger", "enter all fields, cant sumbit!");
+      return
     } else if (state.todoText && state.editFlag) {
-      dispatch({ type: actions.EDIT_TODO });
-      dispatch({
-        type: actions.SET_STATE,
-        payload: { key: "editFlag", value: false },
-      });
+      updateEditedTodo()
       showAlert(true, "success", "todo edited!");
     } else {
       const newTodo: ITodo = {
@@ -138,51 +129,58 @@ const AppProvider = ({ children }: providerProps) => {
         completed: false,
       };
       addTodo(newTodo);
+      showAlert(true, "success", "todo added!");
     }
-    dispatch({
-      type: actions.SET_STATE,
-      payload: { key: "todoText", value: "" },
-    });
-    dispatch({
-      type: actions.SET_STATE,
-      payload: { key: "dateTime", value: { date: "", time: "" } },
-    });
+    setInputsToDefault()
   };
 
   const addTodo = (newTodo: ITodo) => {
     if (state.sort === "Date Ascending" || state.sort === "Date Descending")
-      dispatch({
-        type: actions.SET_STATE,
-        payload: { key: "sort", value: "Newest" },
-      });
+      dispatch({ type: actions.SET_STATE, payload: { key: "sort", value: "Newest" }});
 
     if (state.sort === "Oldest")
       dispatch({ type: actions.ADD_TODO_END, payload: newTodo });
     else if (state.sort === "Newest")
       dispatch({ type: actions.ADD_TODO_BEGINING, payload: newTodo });
-
-    showAlert(true, "success", "todo added!");
   };
 
-  const filterTodos = useCallback((): void => {
-    let filteredTodos;
+  const updateEditedTodo = ()=>{
+    dispatch({ type: actions.EDIT_TODO });
+    dispatch({
+        type: actions.SET_STATE,
+        payload: { key: "editFlag", value: false },
+    });
+  }
 
-    switch (state.select) {
-      case "Completed":
-        filteredTodos = state.todos.filter((todo) => todo.completed);
-        break;
-      case "Uncompleted":
-        filteredTodos = state.todos.filter((todo) => !todo.completed);
-        break;
-      default:
-        filteredTodos = state.todos;
-        break;
-    }
+  const setInputsToDefault = ()=>{
+    dispatch({
+      type: actions.SET_STATE, 
+      payload: { key: "todoText", value: "" }
+    });
     dispatch({
       type: actions.SET_STATE,
-      payload: { key: "filteredTodos", value: filteredTodos },
+      payload: { key: "dateTime", value: { date: "", time: "" } }
     });
-  }, [state.todos, state.select]);
+  }
+ 
+
+  const filterTodos = (todos: ITodo[], select: string) => {
+    let filteredTodos: ITodo[];
+    switch (select) {
+      case "Completed":
+        filteredTodos = todos.filter((todo) => todo.completed);
+        break;
+      case "Uncompleted":
+        filteredTodos = todos.filter((todo) => !todo.completed);
+        break;
+      default:
+        filteredTodos = todos;
+        break;
+    }
+    return filteredTodos;
+  };
+
+
 
   const sortTodos = useCallback((): void => {
     let sortedTodos;
@@ -190,20 +188,20 @@ const AppProvider = ({ children }: providerProps) => {
 
     switch (state.sort) {
       case "Date Ascending":
-        sortedTodos = todos.sort((a, b) => sortByDate(a.dateTime, b.dateTime));
+        sortedTodos = todos.sort((a, b) => 
+          sortByDate(a.dateTime, b.dateTime));
         break;
       case "Date Descending":
-        sortedTodos = todos.sort((a, b) => sortByDate(b.dateTime, a.dateTime));
+        sortedTodos = todos.sort((a, b) => 
+          sortByDate(b.dateTime, a.dateTime));
         break;
       case "Oldest":
         sortedTodos = todos.sort((a, b) =>
-          sortByCreated(a.createdAt, b.createdAt)
-        );
+          sortByCreated(a.createdAt, b.createdAt));
         break;
       case "Newest":
         sortedTodos = todos.sort((a, b) =>
-          sortByCreated(b.createdAt, a.createdAt)
-        );
+          sortByCreated(b.createdAt, a.createdAt));
         break;
     }
     dispatch({
@@ -216,9 +214,7 @@ const AppProvider = ({ children }: providerProps) => {
     localStorage.setItem("todos", JSON.stringify(state.todos));
   }, [state.todos]);
 
-  useEffect(() => {
-    filterTodos();
-  }, [filterTodos]);
+  
 
   useEffect(() => {
     sortTodos();
@@ -227,11 +223,19 @@ const AppProvider = ({ children }: providerProps) => {
   return (
     <AppContext.Provider
       value={{
-        ...state, 
-        handleSubmit, handleTodoText, showAlert,
-        handleDateTime, deleteTodos, deleteTodo,
-        handleSortSelect, editTodo, checkTodo, 
-        handleShowSelect, moveTodo, 
+        ...state,
+        handleSubmit,
+        handleTodoText,
+        showAlert,
+        handleDateTime,
+        deleteTodos,
+        deleteTodo,
+        handleSortSelect,
+        editTodo,
+        checkTodo,
+        handleShowSelect,
+        moveTodo,
+        filterTodos
       }}
     >
       {children}
@@ -243,4 +247,4 @@ export const useGlobalContext = () => {
   return useContext(AppContext);
 };
 
-export { AppContext, AppProvider };
+export { AppProvider };

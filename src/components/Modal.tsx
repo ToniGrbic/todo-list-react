@@ -2,8 +2,7 @@ import React , {ReactElement}from 'react'
 import  { ModalProps, TodoAppContext } from '../types/todos'
 import { useGlobalContext } from '../state/context'
 
-const Modal = 
-({select, setShowModal}:ModalProps):ReactElement => {
+const Modal = ({ select, setShowModal}:ModalProps):ReactElement => {
   
   const { deleteTodos } = useGlobalContext() as TodoAppContext
   
@@ -27,5 +26,4 @@ const Modal =
     </div>
   )
 }
-
 export default Modal

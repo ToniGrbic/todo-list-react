@@ -3,15 +3,15 @@ import { useGlobalContext } from '../state/context';
 import { TodoAppContext } from '../types/todos';
 
 const Alert = ():ReactElement => {
-  const { alert, todos, showAlert} = useGlobalContext() as TodoAppContext
+  const { alert, todos, todoText, showAlert } = 
+  useGlobalContext() as TodoAppContext
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       showAlert(false, '', '');
     }, 1500);
-    
     return () => clearTimeout(timeout);
-  }, [todos, showAlert]);
+  }, [todos]);
   
   return (
   <div style={{ height: "3.5rem" }}>
@@ -22,5 +22,4 @@ const Alert = ():ReactElement => {
   </div>
   );
 }
-
 export default Alert

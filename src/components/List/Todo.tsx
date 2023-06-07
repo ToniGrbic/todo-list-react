@@ -12,7 +12,8 @@ const Todo = ({ todo, index }: TodoProps): ReactElement => {
     <div className={`todoDiv ${completed ? "todoCompleted" : null}`}>
       <div>
         <div className="indexNumber">{index + 1}</div>
-        <button style={{ height: "25px" }} onClick={() => editTodo(id)}>
+        <button style={{ height: "25px" }} 
+                onClick={() => editTodo(id)}>
           <FaEdit />
         </button>
       </div>

@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
+import { ITodo } from "../../types/todos";
 import Todo from "./Todo";
-import { useGlobalContext } from "../../state/context";
-import { TodoAppContext } from "../../types/todos";
-const List = (): ReactElement => {
-  const { filteredTodos } = useGlobalContext() as TodoAppContext;
 
+const List = ({filteredTodos}: {
+  filteredTodos: ITodo[];
+}): ReactElement => {
   return (
     <>
       {filteredTodos.map((todo, index) => {
@@ -13,5 +13,5 @@ const List = (): ReactElement => {
     </>
   );
 };
-
 export default List;
+

@@ -15,10 +15,12 @@ const TodoButtons = ({ id }: { id: string }) => {
       <button onClick={() => deleteTodo(id)}>
         <FaTrash />
       </button>
-      <button className="bsChev" onClick={() => moveTodo(id, "Up")}>
+      <button onClick={() => moveTodo(id, "Up")}
+              className="bsChev">
         <BsChevronUp />
       </button>
-      <button className="bsChev" onClick={() => moveTodo(id, "Down")}>
+      <button onClick={() => moveTodo(id, "Down")}
+              className="bsChev">
         <BsChevronDown />
       </button>
     </div>

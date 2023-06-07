@@ -1,18 +1,16 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useMemo } from "react";
 import { useGlobalContext } from "../../state/context";
 import { TodoAppContext } from "../../types/todos";
 import { FormSelect, TextInput, DateTimeInput } from "../index";
-
-const showArr = ["All", "Completed", "Uncompleted"];
-const sortArr = ["Newest", "Oldest", "Date Ascending", "Date Decending"];
+import { showArr, sortArr } from "../../utils/utils";
 
 const Form = (): ReactElement => {
-  const { handleSubmit, handleShowSelect, handleSortSelect } = 
-        useGlobalContext() as TodoAppContext;
+  const { handleSubmit, handleShowSelect, handleSortSelect } =
+          useGlobalContext() as TodoAppContext;
 
   return (
     <form id="Form" onSubmit={handleSubmit}>
-      <DateTimeInput/>
+      <DateTimeInput />
       <TextInput />
       <FormSelect
         handleSelect={handleShowSelect}

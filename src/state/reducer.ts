@@ -28,9 +28,8 @@ const reducer = (state: TodoAppState, action: IAction): TodoAppState => {
       break;
     case act.CHECK_TODO:
       newTodos = state.todos.map((todo) => {
-        if (todo.id === payload) {
+        if (todo.id === payload) 
           return { ...todo, completed: !todo.completed };
-        }
         return todo;
       });
       state = { ...state, todos: newTodos };

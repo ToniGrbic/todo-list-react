@@ -20,7 +20,6 @@ export interface TodoAppState {
   alert: { show: boolean; type: string; msg: string };
   select: string;
   sort: string;
-  filteredTodos: ITodo[];
 }
 
 export interface TodoAppContext extends TodoAppState {
@@ -35,6 +34,7 @@ export interface TodoAppContext extends TodoAppState {
   handleSortSelect: (value: string) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   showAlert: (show: boolean, type: string, msg: string) => void;
+  filterTodos: (todos: ITodo[], select:string)=> ITodo[] 
 }
 
 export type ITodo = {
@@ -55,26 +55,26 @@ export type DateTime = {
   time: string;
 };
 
-export type ModalProps = {
+export interface ModalProps {
   select: string;
   setShowModal: (state: boolean) => void;
 };
 
-export type TodoProps = {
+export interface TodoProps {
   todo: ITodo;
   index: number;
 };
 
-export type FormSelectProps = {
+export interface FormSelectProps {
   handleSelect: (value: string) => void;
   options: string[];
   type: string;
 };
-export type ClearBtnProps = {
+export interface ClearBtnProps {
   setShowModal: (value: boolean) => void;
   select: string;
 };
 
-export type providerProps = {
+export interface providerProps {
   children: ReactNode;
 };

@@ -1,4 +1,4 @@
-import React, { ReactElement, useLayoutEffect, useRef } from "react";
+import React, { ReactElement, useEffect, useRef } from "react";
 import { useGlobalContext } from "../../state/context";
 import { TodoAppContext } from "../../types/todos";
 
@@ -7,9 +7,13 @@ const TextInput = (): ReactElement => {
       = useGlobalContext() as TodoAppContext;
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useLayoutEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
-  }, [editFlag]);
+  useEffect(() => {
+    if (inputRef.current && todoText===""){
+      inputRef.current!.focus();
+      console.log(todoText)
+    } 
+      
+  }, [editFlag, todoText]);
 
   return (
     <div className="submitDiv">
