@@ -3,7 +3,7 @@ import { useGlobalContext } from '../state/context';
 import { TodoAppContext } from '../types/todos';
 
 const Alert = ():ReactElement => {
-  const { alert, todos, todoText, showAlert } = 
+  const { alert, todos, showAlert } = 
   useGlobalContext() as TodoAppContext
 
   useEffect(() => {

@@ -17,18 +17,14 @@ const Todo = ({ todo, index }: TodoProps): ReactElement => {
           <FaEdit />
         </button>
       </div>
-
       <div className="todoText">
-        {dateTime.date && (
           <h4 className="dateTime">
             {dateTime.date} Time: {dateTime.time}
           </h4>
-        )}
         <h4>{text}</h4>
       </div>
       <TodoButtons id={id} />
     </div>
   );
 };
-
 export default Todo;

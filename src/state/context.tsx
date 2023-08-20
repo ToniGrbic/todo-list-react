@@ -163,7 +163,6 @@ const AppProvider = ({ children }: providerProps) => {
     });
   }
  
-
   const filterTodos = (todos: ITodo[], select: string) => {
     let filteredTodos: ITodo[];
     switch (select) {
@@ -179,9 +178,7 @@ const AppProvider = ({ children }: providerProps) => {
     }
     return filteredTodos;
   };
-
-
-
+  
   const sortTodos = useCallback((): void => {
     let sortedTodos;
     const todos = [...state.todos];
@@ -213,8 +210,6 @@ const AppProvider = ({ children }: providerProps) => {
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(state.todos));
   }, [state.todos]);
-
-  
 
   useEffect(() => {
     sortTodos();

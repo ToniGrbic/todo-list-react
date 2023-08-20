@@ -4,13 +4,11 @@ import { useGlobalContext } from "./state/context";
 import autoAnimate from "@formkit/auto-animate";
 import { TodoAppContext } from "./types/todos";
 
-
-
 const App = (): ReactElement => {
-  const { todos, select, filterTodos } = 
-         useGlobalContext() as TodoAppContext;
   const [showModal, setShowModal] = useState<boolean>(false);
   const todoParentEl = useRef<HTMLDivElement>(null);
+  const { todos, select, filterTodos } = 
+         useGlobalContext() as TodoAppContext;
 
   useEffect(() => {
     if (todoParentEl.current) autoAnimate(todoParentEl.current);
@@ -22,7 +20,8 @@ const App = (): ReactElement => {
 
   return (
     <div className="container">
-      {showModal && <Modal setShowModal={setShowModal} select={select} />}
+      {showModal && 
+       <Modal setShowModal={setShowModal} select={select} />}
       <h1>Todo List</h1>
       <Alert />
       <Form />
