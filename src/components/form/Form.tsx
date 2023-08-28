@@ -1,7 +1,9 @@
 import React, { ReactElement, useMemo } from "react";
 import { useGlobalContext } from "../../state/context";
 import { TodoAppContext } from "../../types/todos";
-import { FormSelect, TextInput, DateTimeInput } from "../index";
+import FormSelect from "./FormSelect";
+import TextInput from "./TextInput";
+import DateTimeInput from "./DateTimeInput";
 //import { showArr, sortArr } from "../../utils/utils";
 
 const sortArr = ["Newest", "Oldest", "Date Ascending", "Date Descending"];
